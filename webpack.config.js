@@ -36,7 +36,7 @@ const config = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: ['manifest']
-    })
+    }),
   ]
 }
 

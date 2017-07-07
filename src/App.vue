@@ -23,6 +23,7 @@
     }
   }
 </script>
+
 <style lang="scss">
   body {
     margin: 0;
@@ -32,7 +33,6 @@
   #app {
     display: flex;
     padding: 8px;
-    // background: #efefef;
     flex-direction: row;
     height: 100%;
   }

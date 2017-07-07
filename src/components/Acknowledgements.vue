@@ -11,6 +11,5 @@
 
 <style lang="scss">
 footer {
-  // background: lightgrey;
 }
 </style>
