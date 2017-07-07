@@ -28,6 +28,10 @@ const config = {
     ]
   },
   resolve: {
+    alias: {
+      vue: 'vue/dist/vue.js',
+    },
+    extensions: ['*', '.js', '.vue', 'json']
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
