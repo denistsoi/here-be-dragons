@@ -1,6 +1,9 @@
 const webpack = require('webpack');
+const Visualizer = require('webpack-visualizer-plugin');
 
 let webpackentry = {
+  'mapbox-gl': 'mapbox-gl',
+  'react-dom': 'react-dom',
   bundle: `${__dirname}/src/index.js`
 }
 
@@ -33,8 +36,9 @@ const config = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['manifest']
-    })
+      name: ['mapbox-gl', 'react-dom', 'manifest']
+    }),
+    new Visualizer()
   ]
 }
 
