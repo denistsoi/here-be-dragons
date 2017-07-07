@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   strict: true,
   state: {
+    location: {}
     // giphy: [],
     // loading: false,
     // online: false,
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     // fixed: false
   },
   getters: {
+    location: state => { return state.location }
     // fixed: state => { return state.fixed },
     // scope: state => { return state.scope },
     // loading: state => { return state.loading },
@@ -24,6 +26,13 @@ export default new Vuex.Store({
     // selection: state => { return state.selection }
   },
   mutations: {
+    location (state, location) {
+      let coord = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      };
+      return state.location = coord;
+    }
     // fixed (state, val) { return state.fixed = val },
     // giphy (state, item) { return state.giphy.push(item) },
     // loading (state, value) { state.loading = value },
