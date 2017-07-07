@@ -1,0 +1,39 @@
+@import './vars';
+
+@mixin site-header() {
+  font-size: $base-height * 8;
+  line-height: $base-height * 8;
+  padding-top: 5px;
+  padding-bottom: 3px;
+}
+@mixin section-header() {
+  font-size: $base-height * 4;
+  line-height: $base-height * 6;
+  font-style: italic;
+  font-weight: 300;
+  padding-top: 5px;
+  padding-bottom: 3px;
+
+}
+@mixin list-header() {
+  font-size: $base-height * 3;
+  line-height: $base-height * 3;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+@mixin list-item() {
+  font-size: $base-height * 3;
+  line-height: $base-height * 3;
+  font-weight: 300;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+@mixin base-font() {
+  font-size: $base-height * 2;
+  line-height: $base-height * 3;
+}
+@mixin detail() {
+  font-size: $base-height * 1.5;
+  line-height: $base-height * 1.5;
+  font-style: italic;
+}

@@ -1,9 +1,15 @@
 <template>
   <div id="sidebar">
+    
+    <header>
+      <h3>Home</h3>
+    </header>
+
     <ul>  
       <li v-for="nav in navigation">
         <div>
-           <!-- <span>{{ nav.label }}</span> -->
+           <!-- <h4>{{ nav.label }}</h4> -->
+           <h4>{{ nav.mock }}</h4>
         </div>
       </li>
     </ul>
@@ -17,19 +23,23 @@ export default {
       navigation: [
         {
           id: 'order',
-          label: 'place order'
+          label: 'order',
+          mock: 'label1'
         },
         {
           id: 'records',
-          label: 'records'
+          label: 'records',
+          mock: 'label2'
         },
         {
           id: 'driver',
-          label: 'manage drivers'
+          label: 'drivers',
+          mock: 'label3'
         },
         {
           id: 'wallet',
-          label: 'wallet'
+          label: 'wallet',
+          mock: 'label4'
         },                        
       ]
     }
@@ -48,13 +58,26 @@ export default {
   li {
     display: block;
     padding: 0;
+    padding-left: 16px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 #sidebar {
-  width: 20%;
-  background: lightblue;
+  width: 10%;
+
+  border-right: 1px dashed rgba(207, 101, 62, .7);
   display: flex;
   max-width: 280px;
+  flex-direction: column;
+  padding-left: 16px;
+  min-width: 160px
+}
+
+@import '../vars';
+header {
+  padding-top: $base-height * 4;
 }
 
 </style>

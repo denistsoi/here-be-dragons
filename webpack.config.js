@@ -1,6 +1,8 @@
 const webpack = require('webpack');
+// const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin') ;
 
 let webpackentry = {
+  mapbox: 'mapbox-gl',
   bundle: `${__dirname}/src/index.js`
 }
 
@@ -31,12 +33,15 @@ const config = {
     alias: {
       vue: 'vue/dist/vue.js',
     },
-    extensions: ['*', '.js', '.vue', 'json']
+    extensions: ['*', '.js', '.json', '.vue']
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['manifest']
+      name: ['mapbox', 'manifest']
     }),
+    // new ServiceWorkerWebpackPlugin({
+    //   entry: `${__dirname}/src/service-worker.js`
+    // })
   ]
 }
 

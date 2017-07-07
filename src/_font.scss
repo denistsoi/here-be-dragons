@@ -1,0 +1,30 @@
+@import "./mixins";
+
+h1, .site-header {
+  @include site-header();
+  font-family: $header-font;
+}
+h2, .section-header {
+  @include section-header();
+  font-family: $base-font;
+}
+h3, .list-header, {
+  @include list-header();
+  font-family: $base-font;
+}
+h4, .list-item-title {
+  @include list-item();
+  font-family: $base-font;
+}
+p, span {
+  @include base-font();
+  font-family: $base-font;
+}
+.detail {
+  @include detail();
+  font-family: $base-font;
+}
+// grid
+.col {
+  max-width: 550px;
+}
