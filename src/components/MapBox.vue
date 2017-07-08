@@ -1,11 +1,11 @@
 <template>
-  <div id="mapbox">
+  <div id="mapbox-item">
   </div>  
 </template>
 
 <script>
 import mapboxgl from 'mapbox-gl';
-import theme from './map.json';
+// import theme from './map';
 
 export default {
   mounted() {
@@ -15,22 +15,50 @@ export default {
         store.commit('location', location);
       });
     }
+    console.log(this);
     this.createMap();
-  },
-  created() {
-    // this.createMap();
   },
   methods: {
     createMap() {
-      mapboxgl.accessToken = ''
-      const map = new mapboxgl.Map({
-        container: 'mapbox',
-        styles: theme,
-        attributionControl: false,
-        maxBounds: [[-180, -75], [180,75]] 
+      var el = document.getElementById('mapbox-item');
+      console.log('does this work?', el)
+      
+      // this also works
+      // mapboxgl.accessToken =   'pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqMTVzZGVmcDAwMjUycXFtdGp4bWgzbWMifQ.V9rdzg6wOgkNQ_D1tygTEw'
+      // var map = new mapboxgl.Map({
+      //   container: 'mapbox-item',
+      //   style: 'mapbox://styles/mapbox/dark-v9',
+      //   zoom: 12,
+      //   center: [114.1794, 22.2888]
+      // });
+      
+      // this works
+      var map = new mapboxgl.Map({
+        container: 'mapbox-item',
+        style: 'https://openmaptiles.github.io/dark-matter-gl-style/style-cdn.json',
+        zoom: 12,
+        center: [114.1794, 22.2888]
       });
-      console.log(map)
+
+      // const map = new mapboxgl.Map({
+      //   container: 'mapbox-item',
+      //   styles: {
+      //   "version": 8,
+      //   "name": "Bright",
+      //   "sources": {
+      //       "mapbox": {
+      //           "url": "https://osm2vectortiles.tileserver.com/v2.json",
+      //           "type": "vector"
+      //       }
+      //   },
+      //   "glyphs": "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
+      //   },
+      //   attributionControl: false,
+      //   maxBounds: [[-180, -75], [180,75]] 
+      // });
+      
       map.addControl(new mapboxgl.NavigationControl(), 'top-right');    
+      console.log('does this work?')
     }
   }
 }
@@ -40,7 +68,7 @@ export default {
 
 @import '../vars';
 @import 'mapstyles';
-#mapbox {
+#mapbox-item {
   min-height: calc(100vh - #{$footer-height} );
   width: 100%;
 }
