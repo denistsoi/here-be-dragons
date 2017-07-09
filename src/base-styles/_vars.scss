@@ -1,7 +1,12 @@
 $base-height: 8px;
 $footer-height: 3 * $base-height;
 
-
 $header-font: 'Playfair Display', serif;
 $base-font: 'Libre Franklin', sans-serif;
 
+$base-font-color: #444;
+$header-color: #666;
+
+$highlight-color: #cf653e;
+
+$loader-color: $highlight-color;

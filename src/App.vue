@@ -25,11 +25,14 @@
 </script>
 
 <style lang="scss">
+  @import './base-styles/vars';
+  
   body {
     margin: 0;
     background-image: linear-gradient(#eee 1px, transparent 1px);
     background-size: 100% 8px; 
     background-color: rgba(238, 239, 238, .7);
+    color: $base-font-color;
   }
   #app {
     display: flex;
@@ -42,6 +45,6 @@
     margin: 0;
   }
   
-  @import 'font';
+  @import './base-styles/font';
 
 </style>

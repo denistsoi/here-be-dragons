@@ -6,10 +6,10 @@
     </header>
 
     <ul>  
-      <li v-for="nav in navigation">
+      <!--<li v-for="nav in navigation" v-bind:class="{ active: nav.active  }" @click="">-->
+      <li v-for="nav in navigation" @click="">
         <div>
-           <!-- <h4>{{ nav.label }}</h4> -->
-           <h4>{{ nav.mock }}</h4>
+            <h4>{{ nav.label }}</h4> 
         </div>
       </li>
     </ul>
@@ -18,36 +18,25 @@
 
 <script>
 export default {
-  data() {
-    return {
-      navigation: [
-        {
-          id: 'order',
-          label: 'order',
-          mock: 'label1'
-        },
-        {
-          id: 'records',
-          label: 'records',
-          mock: 'label2'
-        },
-        {
-          id: 'driver',
-          label: 'drivers',
-          mock: 'label3'
-        },
-        {
-          id: 'wallet',
-          label: 'wallet',
-          mock: 'label4'
-        },                        
-      ]
+  computed: {
+    navigation() {
+      let store = this.$store;
+      let navigation = store.getters.navigation[store.getters.language].navigation;
+      return navigation;
+    },
+    active() {
+      // let store = this.$store;
+
     }
-  }
+  },
+  // mounted() {
+  //   this.$store.commit('loading', false);
+  // }
 }
 </script>
 
 <style lang="scss">
+@import '../base-styles/vars';
 :root {
   ul {
     padding: 0;
@@ -62,22 +51,29 @@ export default {
     &:hover {
       cursor: pointer;
     }
+    &.active {
+      border-left: 4px solid $highlight-color;
+      padding-left: 12px;
+    }
+    text-transform: capitalize;
   }
 }
 #sidebar {
   width: 10%;
-
-  border-right: 1px dashed rgba(207, 101, 62, .7);
+  border-right: 1px dashed #cf653e;
   display: flex;
   max-width: 280px;
   flex-direction: column;
-  padding-left: 16px;
+  // padding-left: 16px;
   min-width: 160px
 }
 
-@import '../vars';
 header {
   padding-top: $base-height * 4;
+  padding-left: 16px;
+  color: $header-color;
+  user-select: none;
+  margin-bottom: $base-height;
 }
 
 </style>

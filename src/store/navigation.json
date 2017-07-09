@@ -1,0 +1,93 @@
+{ 
+  "version": "0.0.1",
+
+  "english": {
+    "navigation": [
+      {
+        "id": "order",
+        "label": "order"
+      },
+      {
+        "id": "records",
+        "label": "records"
+      },
+      {
+        "id": "driver",
+        "label": "drivers"
+      },
+      {
+        "id": "wallet",
+        "label": "wallet"
+      }
+    ]
+  },
+  "chinese-tw": {
+    "navigation": [
+      {
+        "id": "order",
+        "label": "下單"
+      },
+      {
+        "id": "records",
+        "label": "紀錄"
+      },
+      {
+        "id": "driver",
+        "label": "管理我的車隊"
+      },
+      {
+        "id": "wallet",
+        "label": "我的錢包"
+      }
+    ]
+  },
+  "chinese-cn": {
+    "navigation": [
+      {
+        "id": "order",
+        "label": "下订单"
+      },
+      {
+        "id": "records",
+        "label": "记录"
+      },
+      {
+        "id": "driver",
+        "label": "管理我的车队"
+      },
+      {
+        "id": "wallet",
+        "label": "我的钱包"
+      }
+    ]
+  },
+
+  "thai": {
+    "navigation": [
+      {
+        "id": "order",
+        "label": "เรียกงานส่งของ"
+      },
+      {
+        "id": "records",
+        "label": "ประวัติ"
+      },
+      {
+        "id": "driver",
+        "label": "จัดการคนขับ"
+      },
+      {
+        "id": "wallet",
+        "label": "บัญชีเงินในระบบ"
+      }
+    ]
+  },
+  "tagalog": {
+    "navigation": [
+    ]
+  },
+  "malay": {
+    "navigation": [
+    ]
+  }
+}
