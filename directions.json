@@ -1,0 +1,54 @@
+{
+  "code": "Ok",
+  "waypoints": [
+    {
+      "hint": "ayvChv___394AAAAmgAAADEAAAAAAAAAeAAAAJoAAAAxAAAAAAAAAB3HAACvJc0Gml5VAeUlzQbxXlUBAQAPAAqcNfA=",
+      "location": [
+        114.107823,
+        22.371994
+      ],
+      "name": "海盛路 Hoi Shing Road"
+    },
+    {
+      "hint": "ghNLhv___38AAAAABAAAAFYAAAAAAAAAAAAAAAQAAABWAAAAAAAAAB3HAADfD84GmKxUAQMQzgaqrFQBBgAPAAqcNfA=",
+      "location": [
+        114.167775,
+        22.326424
+      ],
+      "name": "彌敦道 Nathan Road"
+    },
+    {
+      "hint": "_k_vhP___38FAAAACQAAAAAAAAAAAAAABQAAAAkAAAAAAAAAAAAAAB3HAACG780GiwhUAZbvzQaDCFQBAAAPAAqcNfA=",
+      "location": [
+        114.159494,
+        22.284427
+      ],
+      "name": "民耀街 Man Yiu Street"
+    }
+  ],
+  "routes": [
+    {
+      "legs": [
+        {
+          "steps": [],
+          "weight": 521.9,
+          "distance": 9654.9,
+          "summary": "",
+          "duration": 521.9
+        },
+        {
+          "steps": [],
+          "weight": 595.3,
+          "distance": 9614.9,
+          "summary": "",
+          "duration": 595.3
+        }
+      ],
+      "weight_name": "routability",
+      "geometry": "}opgC{tmwTlB~DvEeFiAoCvb@sc@|K_ShZyNf`@ya@~GsA~ZnFjJ{@nPq^bX_QxMgcA|FwIoBiWxL}Fn|@opAeAkUuNCiCrDbCvBy@mjAb]z@|PyFjVdKfQ`Bpg@q\\jYlFnlBkPrQnMrH`Y~A|[iAtf@_JfQuFhZ}JuE",
+      "weight": 1117.2,
+      "distance": 19269.8,
+      "duration": 1117.2
+    }
+  ]
+}

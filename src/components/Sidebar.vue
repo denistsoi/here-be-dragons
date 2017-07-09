@@ -6,8 +6,7 @@
     </header>
 
     <ul>  
-      <!--<li v-for="nav in navigation" v-bind:class="{ active: nav.active  }" @click="">-->
-      <li v-for="nav in navigation" @click="">
+      <li v-for="nav in navigation" v-bind:class="{ active: nav.id == active }" @click="changeActive(nav.id)">
         <div>
             <h4>{{ nav.label }}</h4> 
         </div>
@@ -17,6 +16,7 @@
 </template>
 
 <script>
+
 export default {
   computed: {
     navigation() {
@@ -25,13 +25,23 @@ export default {
       return navigation;
     },
     active() {
-      // let store = this.$store;
-
+      let store = this.$store;
+      return store.getters.active;
     }
   },
-  // mounted() {
-  //   this.$store.commit('loading', false);
-  // }
+  created() {
+    let store = this.$store;
+    store.commit('active', 'order');
+  },
+  methods: {
+    changeActive(id) {
+      let active = this.$store.getters.active;
+
+      if (active != id) {
+        this.$store.commit('active', id);
+      }
+    }
+  }
 }
 </script>
 
@@ -69,7 +79,7 @@ export default {
 }
 
 header {
-  padding-top: $base-height * 4;
+  padding-top: $header-height;
   padding-left: 16px;
   color: $header-color;
   user-select: none;

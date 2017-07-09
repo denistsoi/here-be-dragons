@@ -30,13 +30,14 @@
   body {
     margin: 0;
     background-image: linear-gradient(#eee 1px, transparent 1px);
-    background-size: 100% 8px; 
-    background-color: rgba(238, 239, 238, .7);
+    background-size: 100% $base-height; 
+    background-color: $default-background-color;
     color: $base-font-color;
+    min-width: 470px;
   }
+
   #app {
     display: flex;
-    // padding: 8px;
     flex-direction: row;
     height: 100%;
   }

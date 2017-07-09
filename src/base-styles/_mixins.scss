@@ -37,3 +37,22 @@
   line-height: $base-height * 1.5;
   font-style: italic;
 }
+
+@mixin createButton() {
+  background-color: $button-color;
+  transition: all .3s ease;
+  color: $button-text-color;
+  border: 0;
+  outline: 0;
+  border-radius: 2px;
+  height: $base-height * 6;
+  line-height: $base-height * 6;
+  padding: 0 $base-height * 2;
+  
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($button-color, 4%);
+    color: darken($button-text-color, 5%);
+    transition: all .3s ease;
+  }
+}

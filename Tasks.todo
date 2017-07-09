@@ -2,11 +2,13 @@
 ☐ need to minify build script for images
 ☐ how about using open street map? - still need a directions api
 
-☐ how do i draw a path? - 
+☐ how do i draw a path? - geojson line
+
 ☐ should i update marker/path based on current positon?
 ☐ how does this respond on mobile?
 
 ☐ maybe run this in electron to combat browser compatibility just incase -
+
 ☐ how about deck.gl to render? - maybe use electron for this
 
 ☐ what's a good UI for this application? - look at dribbble for inspiration

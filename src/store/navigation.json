@@ -9,15 +9,18 @@
       },
       {
         "id": "records",
-        "label": "records"
+        "label": "records",
+        "disabled": true
       },
       {
         "id": "driver",
-        "label": "drivers"
+        "label": "drivers",
+        "disabled": true
       },
       {
         "id": "wallet",
-        "label": "wallet"
+        "label": "wallet",
+        "disabled": true
       }
     ]
   },

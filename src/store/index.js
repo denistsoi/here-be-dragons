@@ -8,7 +8,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   strict: true,
   state: {
+    active: null,
     language: 'english',
+    loading: false,
     location: {},
     locations: {
       'hong-kong': {
@@ -51,9 +53,9 @@ export default new Vuex.Store({
         zoom: 9        
       }
     },
+    map: null,
     navigation: navigation,
-    active: 'orders',
-    loading: false,
+    token: null
     // giphy: [],
     // loading: false,
     // online: false,
@@ -64,10 +66,13 @@ export default new Vuex.Store({
     // fixed: false
   },
   getters: {
+    active: state => { return state.active },
     language: state => { return state.language },
     loading: state => { return state.loading },
     location: state => { return state.location },
-    navigation: state => { return state.navigation }
+    map: state => { return state.map },
+    navigation: state => { return state.navigation },
+    token: state => { return state.token }
     // fixed: state => { return state.fixed },
     // scope: state => { return state.scope },
     // loading: state => { return state.loading },
@@ -76,6 +81,9 @@ export default new Vuex.Store({
     // selection: state => { return state.selection }
   },
   mutations: {
+    active (state, id) {
+      return state.active = id;
+    },
     loading (state, val) {
       return state.loading = val;
     },
@@ -86,7 +94,9 @@ export default new Vuex.Store({
       };
       return state.location = coord;
     },
-    
+    token (state, token) {
+      return state.token = token;
+    }
     // fixed (state, val) { return state.fixed = val },
     // giphy (state, item) { return state.giphy.push(item) },
     // loading (state, value) { state.loading = value },
