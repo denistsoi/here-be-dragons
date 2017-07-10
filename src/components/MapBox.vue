@@ -78,7 +78,7 @@ export default {
       let store = this.$store;
       
       if (!attempts) {
-        attempts = 0;
+        attempts = 1;
       }
 
       if (!store.getters.route) {
@@ -89,9 +89,13 @@ export default {
             if (data.status == StatusCodes.failure) {
               // throw failure
               store.commit('message', data);
+
             } else if (data.status == StatusCodes.progress) {
               // show in progress (try again)
-              store.commit('message', data);
+              store.commit('message',  { 
+                status: 'progress', 
+                infoMessage: `attempt #${attempts}: server in progress, retrying request...`
+              });
               
               setTimeout(()=>{
                 attempts++;
@@ -99,18 +103,31 @@ export default {
               }, 2000);
             } else if (data.status == StatusCodes.success) {
               // show route
-              store.commit('message', null);
-              console.log('got a route!');
+              store.commit('message', { 
+                status: data.status, 
+                successMessage: 'successfully retrieved route' 
+              });
               vm.generateRoute(data);
             }
           })
           .catch(error => {
-            store.commit('message', { error: `fetch failed... retrying ${attempts}`})
+            store.commit('message', { 
+              error: true,
+              errorMessage: `fetch failed... retrying ${attempts}`
+            })
             
-            setTimeout(()=>{
+            if (attempts < 5) {
               attempts++;
-              vm.getRoute(token, attempts);
-            }, 2000);
+              setTimeout(() => {
+                vm.getToken(attempts) 
+              }, 2000);
+            } else {
+              // show error after all failed retries
+              store.commit('message', { 
+                error: true, 
+                errorMessage: 'Server has an error, please contact help@lalamove.com' 
+              });
+            }
             handleError(error)
           });
       }
@@ -121,7 +138,7 @@ export default {
       let store = this.$store;
 
       if (!attempts) {
-        attempts = 0;
+        attempts = 1;
       } 
       
       let token = store.getters.token;
@@ -137,20 +154,36 @@ export default {
         .then(response => handleResponse(response))
         .then(data => {          
           store.commit('token', data.token);
-          vm.getRoute(data.token);
+          
+          store.commit('message', { 
+            success: 'token', 
+            successMessage: 'Successfully retrieved token, requesting route...'
+          })
+          
+          setTimeout(() => {
+            vm.getRoute(data.token) 
+          }, 2000);
         })
         .catch(error => {
-          store.commit('message', { error: `fetch failed... retrying: ${attempts}`})
+
+          store.commit('message', { 
+            error: true,
+            errorMessage: `attempt: ${attempts}. Request at access token failed. retrying... `
+          })
           handleError(error);
           
           if (attempts < 5) {
-            attempts++;
+            
             setTimeout(() => {
+              attempts++;
               vm.getToken(attempts) 
             }, 2000);
           } else {
             // show error after all failed retries
-            store.commit('message', 'Server has an error, please contact help@lalamove.com');
+            store.commit('message', {
+              error: true,
+              errorMessage: 'Server has an error, please contact help@lalamove.com'
+            });
           }
         });
     }

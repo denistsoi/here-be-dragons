@@ -3,7 +3,9 @@
   <div v-if="message" class="message">
     <span>{{ message }}</span>
     <br>
-    
+    <span v-if="message.infoMessage">
+      {{ message.infoMessage }}
+    </span>
     <!--<span v-if="message.error" 
           v-bind:class="{ error: message.error }">
           {{ message.error }}</span>
@@ -38,5 +40,11 @@ export default {
 </script>
 
 <style lang="scss">
-
+.message {
+  background: white;
+  width: 50%;
+  margin: 0 auto;
+  padding: 8px;
+  margin-top: 16px;
+}
 </style>
