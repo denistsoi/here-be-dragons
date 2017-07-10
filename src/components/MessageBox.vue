@@ -1,21 +1,24 @@
 <template>
   <section>
   <div v-if="message" class="message">
-    <span>{{ message }}</span>
-    <br>
+    <!-- error message -->
+    <span v-if="message.errorMessage">
+      {{ message.errorMessage }}
+    </span>
+
+    <!-- info message -->
     <span v-if="message.infoMessage">
       {{ message.infoMessage }}
     </span>
-    <!--<span v-if="message.error" 
-          v-bind:class="{ error: message.error }">
-          {{ message.error }}</span>
-    
-    <span v-if="!message.error && message.status != 'success'"
-          v-bind:class="{ progress: message.status == 'in progress' }">
-          {{ message.status }}</span>-->
+
+    <!-- success message -->
+    <span v-if="message.successMessage">
+      {{ message.successMessage }}
+    </span>
     
   </div>
   <div v-if="debug">
+    <span>{{ message }}</span>
     <span>{{ route }} / {{ token }}</span>
   </div>
   </section>

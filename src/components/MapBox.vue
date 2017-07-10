@@ -1,7 +1,12 @@
 <template>
   <div id="mapbox-item">
     <div class="create-route">
-      <button @click="getToken()"><span>{{ route ? 'Plot' : 'Create' }}</span></button>
+      <button v-if="!route" 
+              v-bind:class="{ requesting: requesting }"
+              v-bind:disabled="requesting"
+              @click="getToken()">
+        <span>{{ !requesting ? 'Request Route' : 'Requesting...' }}</span>
+      </button>
       <MessageBox :message="message"></MessageBox>
     </div>
   </div>  
@@ -26,6 +31,7 @@ export default {
   data() {
     return {
       map: null,
+      requesting: false
     }
   },
   computed: {
@@ -34,16 +40,23 @@ export default {
     },
     message() {
       return this.$store.getters.message;
-    }
+    },
+
   },
   mounted() {
     const store = this.$store;
 
+    let bounds = [
+      [113.23507613916462, 21.8603418729641],
+      [115.05259007364214, 22.777303015462593]
+    ];
+    
     const map = new mapboxgl.Map({
       container: 'mapbox-item',
       style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
       zoom: 10,
       center: [114.1794, 22.2888],
+      maxBounds: bounds
     });
 
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -51,11 +64,11 @@ export default {
     // we want to reference this later
     this.$set(this, 'map', map);
 
-    // store.commit('loading', true);
+    store.commit('loading', true);
 
-    // map.on('load', ()=> {
-    //   store.commit('loading', false);
-    // });
+    map.on('load', ()=> {
+      store.commit('loading', false);
+    });
   },
   methods: {
     generateRoute(route) {
@@ -71,7 +84,9 @@ export default {
 
       for (var i = 0; i < path.length -1; i++) {
         generatePath(i, vm.map, path);
+        // generateMarkers(i, vm.map, path);
       }
+      vm.$set(this, 'requesting', false);
     },
     getRoute(token, attempts) {
       let vm = this;
@@ -88,8 +103,12 @@ export default {
             console.log(data);
             if (data.status == StatusCodes.failure) {
               // throw failure
-              store.commit('message', data);
-
+              store.commit('message', {
+                error: true,
+                status: data.status,
+                errorMessage: data.error + '... Try again'
+              });
+              vm.$set(this, 'requesting', false);
             } else if (data.status == StatusCodes.progress) {
               // show in progress (try again)
               store.commit('message',  { 
@@ -113,7 +132,7 @@ export default {
           .catch(error => {
             store.commit('message', { 
               error: true,
-              errorMessage: `fetch failed... retrying ${attempts}`
+              errorMessage: `attempt: ${attempts}. Request at generating route failed. retrying... `
             })
             
             if (attempts < 5) {
@@ -127,6 +146,7 @@ export default {
                 error: true, 
                 errorMessage: 'Server has an error, please contact help@lalamove.com' 
               });
+              vm.$set(this, 'requesting', false);
             }
             handleError(error)
           });
@@ -146,6 +166,7 @@ export default {
         return vm.getRoute(token);
       }
       
+      vm.$set(this, 'requesting', true);
       // TODO: suggestion
       // push to array to handle multiple routes
       fetch('http://localhost:3001/route', {
@@ -184,6 +205,7 @@ export default {
               error: true,
               errorMessage: 'Server has an error, please contact help@lalamove.com'
             });
+            vm.$set(this, 'requesting', false);
           }
         });
     }
@@ -213,6 +235,12 @@ export default {
   // padding: 8px 0;
   button {
     @include createButton();
+    &.requesting,
+    &.requesting:hover {
+      background-color: $button-color;
+      transition: all .3s ease;
+      color: $button-text-color;
+    }
   }
 }
 </style>
