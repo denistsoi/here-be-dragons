@@ -9,6 +9,7 @@ export default new Vuex.Store({
   strict: true,
   state: {
     active: null,
+    debug: process.env.DEBUG,
     language: 'english',
     loading: false,
     location: {},
@@ -56,6 +57,7 @@ export default new Vuex.Store({
     map: null,
     message: null,
     navigation: navigation,
+    path: null,
     route: null,
     token: null
     // giphy: [],
@@ -75,6 +77,7 @@ export default new Vuex.Store({
     map: state => { return state.map },
     message: state => { return state.message },
     navigation: state => { return state.navigation },
+    path: state => { return state.path },
     route: state => { return state.route },
     token: state => { return state.token }
     // fixed: state => { return state.fixed },
@@ -101,12 +104,18 @@ export default new Vuex.Store({
     message (state, message) {
       return state.message = message;
     },
-    token (state, token) {
-      return state.token = token;
+    path (state, route) {
+      let path = route.path.map(step => {
+        return [step[1], step[0]];
+      });
+      return state.path = path;
     },
     saveRoute (state, route) {
       return state.route = route;
-    }
+    },
+    token (state, token) {
+      return state.token = token;
+    },    
     // fixed (state, val) { return state.fixed = val },
     // giphy (state, item) { return state.giphy.push(item) },
     // loading (state, value) { state.loading = value },

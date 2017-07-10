@@ -1,7 +1,7 @@
 <template>
   <div id="mapbox-item">
     <div class="create-route">
-      <button @click="getToken()"><span>Create</span></button>
+      <button @click="getToken()"><span>{{ route ? 'Plot' : 'Create' }}</span></button>
       <MessageBox :message="message"></MessageBox>
     </div>
   </div>  
@@ -10,6 +10,7 @@
 <script>
 import mapboxgl from 'mapbox-gl';
 import { 
+  generatePath,
   handleResponse, 
   handleRouteRequest,
   handleError,
@@ -22,7 +23,15 @@ export default {
   components: {
     MessageBox
   },
+  data() {
+    return {
+      map: null,
+    }
+  },
   computed: {
+    route() {
+      return this.$store.getters.route;
+    },
     message() {
       return this.$store.getters.message;
     }
@@ -30,14 +39,17 @@ export default {
   mounted() {
     const store = this.$store;
 
-    // const map = new mapboxgl.Map({
-    //   container: 'mapbox-item',
-    //   style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
-    //   zoom: 10,
-    //   center: [114.1794, 22.2888],
-    // });
+    const map = new mapboxgl.Map({
+      container: 'mapbox-item',
+      style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
+      zoom: 10,
+      center: [114.1794, 22.2888],
+    });
 
-    // map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    // we want to reference this later
+    this.$set(this, 'map', map);
 
     // store.commit('loading', true);
 
@@ -47,9 +59,19 @@ export default {
   },
   methods: {
     generateRoute(route) {
+      let vm = this;
       let store = this.$store;
       store.commit('saveRoute', route);
+      store.commit('path', route);
 
+      window.map = vm.map;
+      window.store = store;
+      
+      let path = store.getters.path;
+
+      for (var i = 0; i < path.length -1; i++) {
+        generatePath(i, vm.map, path);
+      }
     },
     getRoute(token, attempts) {
       let vm = this;
@@ -91,8 +113,6 @@ export default {
             }, 2000);
             handleError(error)
           });
-      } else {
-        console.log('i already have route');
       }
       
     },
@@ -106,12 +126,11 @@ export default {
       
       let token = store.getters.token;
       if (token) {
-        // console.log('token is already set');
         return vm.getRoute(token);
       }
       
       // TODO: suggestion
-      // push to array to handle multple routes
+      // push to array to handle multiple routes
       fetch('http://localhost:3001/route', {
         method: 'post'
       })
