@@ -1,7 +1,8 @@
 <template>
   <div id="mapbox-item">
     <div class="create-route">
-      <button @click="getToken()"><span>Create Route</span></button>
+      <button @click="getToken()"><span>Create</span></button>
+      <MessageBox :message="message"></MessageBox>
     </div>
   </div>  
 </template>
@@ -11,55 +12,128 @@ import mapboxgl from 'mapbox-gl';
 import { 
   handleResponse, 
   handleRouteRequest,
-  handleError } from '../utils';
+  handleError,
+  StatusCodes 
+} from '../utils';
 
-
+import MessageBox from './MessageBox';
 
 export default {
+  components: {
+    MessageBox
+  },
+  computed: {
+    message() {
+      return this.$store.getters.message;
+    }
+  },
   mounted() {
     const store = this.$store;
 
-    const map = new mapboxgl.Map({
-      container: 'mapbox-item',
-      style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
-      zoom: 10,
-      center: [114.1794, 22.2888],
-    });
+    // const map = new mapboxgl.Map({
+    //   container: 'mapbox-item',
+    //   style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
+    //   zoom: 10,
+    //   center: [114.1794, 22.2888],
+    // });
 
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    // map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    store.commit('loading', true);
+    // store.commit('loading', true);
 
-    map.on('load', ()=> {
-      store.commit('loading', false);
-    });
+    // map.on('load', ()=> {
+    //   store.commit('loading', false);
+    // });
   },
   methods: {
-    getRoute(token) {
-      
-      fetch(`http://localhost:8080/route/${token}`)
-        .then(response => handleRouteRequest(response))
-        .then(data => {
-          console.log('route', data);
-        })
-        .catch(error => handleError(error));
+    generateRoute(route) {
+      let store = this.$store;
+      store.commit('saveRoute', route);
+
     },
-    getToken() {
+    getRoute(token, attempts) {
+      let vm = this;
+      let store = this.$store;
+      
+      if (!attempts) {
+        attempts = 0;
+      }
+
+      if (!store.getters.route) {
+        fetch(`http://localhost:3001/route/${token}`)
+          .then(response => handleRouteRequest(response))
+          .then(data => {
+            console.log(data);
+            if (data.status == StatusCodes.failure) {
+              // throw failure
+              store.commit('message', data);
+            } else if (data.status == StatusCodes.progress) {
+              // show in progress (try again)
+              store.commit('message', data);
+              
+              setTimeout(()=>{
+                attempts++;
+                vm.getRoute(token, attempts);
+              }, 2000);
+            } else if (data.status == StatusCodes.success) {
+              // show route
+              store.commit('message', null);
+              console.log('got a route!');
+              vm.generateRoute(data);
+            }
+          })
+          .catch(error => {
+            store.commit('message', { error: `fetch failed... retrying ${attempts}`})
+            
+            setTimeout(()=>{
+              attempts++;
+              vm.getRoute(token, attempts);
+            }, 2000);
+            handleError(error)
+          });
+      } else {
+        console.log('i already have route');
+      }
+      
+    },
+    getToken(attempts) {
+      let vm = this;
       let store = this.$store;
 
+      if (!attempts) {
+        attempts = 0;
+      } 
+      
+      let token = store.getters.token;
+      if (token) {
+        // console.log('token is already set');
+        return vm.getRoute(token);
+      }
+      
+      // TODO: suggestion
       // push to array to handle multple routes
-      fetch('http://localhost:8080/route', {
+      fetch('http://localhost:3001/route', {
         method: 'post'
       })
         .then(response => handleResponse(response))
-        .then(data => {
-          let token = store.getters.token;
-          if (!token) {
-            store.commit('token', data.token);
-          };
-          this.getRoute(data.token);
+        .then(data => {          
+          store.commit('token', data.token);
+          vm.getRoute(data.token);
         })
-        .catch(error => handleError(error));
+        .catch(error => {
+          store.commit('message', { error: `fetch failed... retrying: ${attempts}`})
+          handleError(error);
+          
+          if (attempts < 5) {
+            attempts++;
+            setTimeout(() => {
+              vm.getToken(attempts) 
+            }, 2000);
+          } else {
+            // show error after all failed retries
+            store.commit('message', 'Server has an error, please contact help@lalamove.com');
+          }
+        });
     }
   }
 }

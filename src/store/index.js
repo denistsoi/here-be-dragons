@@ -54,7 +54,9 @@ export default new Vuex.Store({
       }
     },
     map: null,
+    message: null,
     navigation: navigation,
+    route: null,
     token: null
     // giphy: [],
     // loading: false,
@@ -71,7 +73,9 @@ export default new Vuex.Store({
     loading: state => { return state.loading },
     location: state => { return state.location },
     map: state => { return state.map },
+    message: state => { return state.message },
     navigation: state => { return state.navigation },
+    route: state => { return state.route },
     token: state => { return state.token }
     // fixed: state => { return state.fixed },
     // scope: state => { return state.scope },
@@ -94,8 +98,14 @@ export default new Vuex.Store({
       };
       return state.location = coord;
     },
+    message (state, message) {
+      return state.message = message;
+    },
     token (state, token) {
       return state.token = token;
+    },
+    saveRoute (state, route) {
+      return state.route = route;
     }
     // fixed (state, val) { return state.fixed = val },
     // giphy (state, item) { return state.giphy.push(item) },

@@ -7,8 +7,12 @@
     "build": "webpack",
     "build:dev": "webpack -w",
     "dev": "DEBUG=app nodemon index.js",
+    "start": "node .",
     "clean": "rimraf dist/ && mkdir dist/",
     "test": "node test/"
+  },
+  "engines": {
+    "node": ">8.0.0"
   },
   "babel": {
     "presets": [

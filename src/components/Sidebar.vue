@@ -8,7 +8,7 @@
     <ul>  
       <li v-for="nav in navigation" v-bind:class="{ active: nav.id == active }" @click="changeActive(nav.id)">
         <div>
-            <h4>{{ nav.label }}</h4> 
+            <!--<h4>{{ nav.label }}</h4> -->
         </div>
       </li>
     </ul>
