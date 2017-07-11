@@ -1,11 +1,12 @@
 <template>
   <div id="mapbox-item">
     <div class="create-route">
-      <button v-if="!route" 
-              v-bind:class="{ requesting: requesting }"
-              v-bind:disabled="requesting"
+      <button 
+              v-bind:class="{ requesting: requesting, disabled: route }"
+              v-bind:disabled="requesting || route"
               @click="getToken()">
-        <span>{{ !requesting ? 'Request Route' : 'Requesting...' }}</span>
+        <span v-if="!route">{{ !requesting ? 'Request Route' : 'Requesting...' }}</span>
+        <span v-if="route">{{ 'Route Generated' }}</span>
       </button>
       <MessageBox :message="message"></MessageBox>
     </div>
@@ -13,7 +14,6 @@
 </template>
 
 <script>
-
 import mapboxgl from 'mapbox-gl';
 import { 
   generateMarkers,
@@ -98,12 +98,13 @@ export default {
       }
 
       if (!store.getters.route) {
+        vm.$set(this, 'requesting', true);
+        
         fetch(`http://localhost:3001/route/${token}`)
           .then(response => handleResponse(response))
           .then(data => {
-            console.log(data);
             if (data.status == StatusCodes.failure) {
-              // throw failure
+              // show failure
               store.commit('message', {
                 error: true,
                 status: data.status,
@@ -114,7 +115,7 @@ export default {
               // show in progress (try again)
               store.commit('message',  { 
                 status: 'progress', 
-                infoMessage: `attempt #${attempts}: server in progress, retrying request...`
+                infoMessage: `Attempt #${attempts}: Server in progress... Retrying... `
               });
               
               setTimeout(()=>{
@@ -133,13 +134,13 @@ export default {
           .catch(error => {
             store.commit('message', { 
               error: true,
-              errorMessage: `attempt: ${attempts}. Request at generating route failed. retrying... `
+              errorMessage: `Attempt #${attempts}: Request at generating route failed. Retrying... `
             })
             
             if (attempts < 5) {
               attempts++;
               setTimeout(() => {
-                vm.getToken(attempts) 
+                vm.getRoute(token, attempts) 
               }, 2000);
             } else {
               // show error after all failed retries
@@ -168,6 +169,7 @@ export default {
       }
       
       vm.$set(this, 'requesting', true);
+
       // TODO: suggestion
       // push to array to handle multiple routes
       fetch('http://localhost:3001/route', {
@@ -190,12 +192,11 @@ export default {
 
           store.commit('message', { 
             error: true,
-            errorMessage: `attempt: ${attempts}. Request at access token failed. retrying... `
+            errorMessage: `Attempt #${attempts}: Request at access token failed. Retrying... `
           })
           handleError(error);
           
           if (attempts < 5) {
-            
             setTimeout(() => {
               attempts++;
               vm.getToken(attempts) 
@@ -240,12 +241,15 @@ export default {
   // padding: 8px 0;
   button {
     @include createButton();
+    &.disabled,
+    &.disabled:hover,
     &.requesting,
     &.requesting:hover {
       background-color: $button-color;
       transition: all .3s ease;
       color: $button-text-color;
     }
+    
   }
 }
 </style>
