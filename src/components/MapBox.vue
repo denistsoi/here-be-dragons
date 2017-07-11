@@ -87,6 +87,33 @@ export default {
         generatePath(i, vm.map, path);
         generateMarkers(vm.map, path[i]);
       }
+      
+      let bounds = path.reduce(function(bounds, coord) {
+          return bounds.extend(coord);
+      }, new mapboxgl.LngLatBounds(path[0], path[0]));
+      
+      let centerBounds = function(bounds) {
+        let lat = (bounds._ne.lat + bounds._sw.lat) / 2;
+        let lng = (bounds._ne.lng + bounds._sw.lng) / 2;
+
+        return {
+          lat,
+          lng
+        }
+      }
+
+      map.fitBounds(bounds, { 
+        padding: { 
+          top: 100
+        }, 
+      });
+      map.flyTo({
+        center: centerBounds(bounds),
+        zoom: 11,
+        bearing: -22,
+        pitch: 25,
+      })
+
       vm.$set(this, 'requesting', false);
     },
     getRoute(token, attempts) {
@@ -99,7 +126,7 @@ export default {
 
       if (!store.getters.route) {
         vm.$set(this, 'requesting', true);
-        
+
         fetch(`http://localhost:3001/route/${token}`)
           .then(response => handleResponse(response))
           .then(data => {
