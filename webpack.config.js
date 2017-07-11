@@ -43,9 +43,9 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['mapbox', 'vue', 'manifest']
     }),
-    new UglifyJSPlugin({
-      exclude: ['manifest', 'mapbox']
-    }),
+    // new UglifyJSPlugin({
+    //   exclude: ['manifest', 'mapbox']
+    // }),
     // new Visualiser({
     //   filename: './stats.html'
     // }),
