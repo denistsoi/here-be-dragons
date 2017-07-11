@@ -15,6 +15,7 @@
 <script>
 import mapboxgl from 'mapbox-gl';
 import { 
+  generateMarkers,
   generatePath,
   handleResponse, 
   handleRouteRequest,
@@ -82,9 +83,9 @@ export default {
       
       let path = store.getters.path;
 
-      for (var i = 0; i < path.length -1; i++) {
+      for (var i = 0; i < path.length; i++) {
         generatePath(i, vm.map, path);
-        // generateMarkers(i, vm.map, path);
+        generateMarkers(vm.map, path[i]);
       }
       vm.$set(this, 'requesting', false);
     },
@@ -223,6 +224,9 @@ export default {
   width: 100%;
 }
 
+.marker {
+  background: black;
+}
 .create-route {
   text-align: center;
   background: transparent;
