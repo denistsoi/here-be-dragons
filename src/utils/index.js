@@ -1,17 +1,26 @@
 import { Marker } from 'mapbox-gl';
+
+/**
+ * status codes for verifying with api
+ */
 export const StatusCodes = {
   failure : 'failure',
   progress: 'in progress',
   success : 'success'
 }
 
+/**
+ * generateMarkers 
+ * @description helper function to generate mapbox markers
+ * @param {*} map 
+ * @param {lat/lng} location 
+ */
 export const generateMarkers = (map, location) => {
   let el = document.createElement('div');
   el.className = 'marker';
   el.style.width = '10px';
   el.style.height = '10px';
   
-  console.log(location);
   new Marker(el,  {offset: 
     [-10 / 2, -10 / 2] 
   })
@@ -19,6 +28,12 @@ export const generateMarkers = (map, location) => {
     .addTo(map);
 }
 
+/**
+ * generatePath
+ * @param {number} i // index of path
+ * @param {Mapbox Object} map 
+ * @param {lat/lng} path 
+ */
 export const generatePath = (i, map, path) => {
   // need to create this as a lib [find lib to generate random gradient from hex]
   let baseColors = ["#CF653E", "#D47F60", "#DA9A83", "#E0B5A6"];
@@ -51,13 +66,10 @@ export const generatePath = (i, map, path) => {
   });
 }
 
-export const handleRouteRequest = (response, store) => {
-  if (response.status == 200) {
-    return response.json();
-  } else {
-    throw Error(`Fetch Failed: ${response.status}`)
-  }
-}
+/**
+ * generic response handler
+ * @param {*} response 
+ */
 
 export const handleResponse = (response) => {
   if (response.status == 200) {
@@ -67,6 +79,10 @@ export const handleResponse = (response) => {
   }
 }
 
+/**
+ * generic error handler
+ * @param {*} error 
+ */
 export const handleError = (error) => {
   console.log('error', error)
 }

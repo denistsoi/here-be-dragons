@@ -48,7 +48,7 @@
 </template>
 
 <style lang="scss">
-@import '../base-styles/vars';
+@import '../common-styles/vars';
 
 #loader {
   text-align: center;

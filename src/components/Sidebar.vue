@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../base-styles/vars';
+@import '../common-styles/vars';
 :root {
   ul {
     padding: 0;

@@ -13,12 +13,12 @@
 </template>
 
 <script>
+
 import mapboxgl from 'mapbox-gl';
 import { 
   generateMarkers,
   generatePath,
   handleResponse, 
-  handleRouteRequest,
   handleError,
   StatusCodes 
 } from '../utils';
@@ -99,7 +99,7 @@ export default {
 
       if (!store.getters.route) {
         fetch(`http://localhost:3001/route/${token}`)
-          .then(response => handleRouteRequest(response))
+          .then(response => handleResponse(response))
           .then(data => {
             console.log(data);
             if (data.status == StatusCodes.failure) {
@@ -216,9 +216,10 @@ export default {
 
 <style lang="scss">
 
-@import '../base-styles/vars';
-@import '../base-styles/mixins';
-@import 'mapstyles';
+@import '../common-styles/vars';
+@import '../common-styles/mixins';
+@import '../common-styles/mapstyles';
+
 #mapbox-item {
   min-height: calc(100vh);
   width: 100%;

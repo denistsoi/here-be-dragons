@@ -60,14 +60,6 @@ export default new Vuex.Store({
     path: null,
     route: null,
     token: null
-    // giphy: [],
-    // loading: false,
-    // online: false,
-    // queries: [],
-    // qs: '',
-    // scope: 'trending',
-    // selection: null,
-    // fixed: false
   },
   getters: {
     active: state => { return state.active },
@@ -80,12 +72,6 @@ export default new Vuex.Store({
     path: state => { return state.path },
     route: state => { return state.route },
     token: state => { return state.token }
-    // fixed: state => { return state.fixed },
-    // scope: state => { return state.scope },
-    // loading: state => { return state.loading },
-    // query: state => { return state.qs; },
-    // queries: state => { return state.queries; },
-    // selection: state => { return state.selection }
   },
   mutations: {
     active (state, id) {
@@ -115,20 +101,6 @@ export default new Vuex.Store({
     },
     token (state, token) {
       return state.token = token;
-    },    
-    // fixed (state, val) { return state.fixed = val },
-    // giphy (state, item) { return state.giphy.push(item) },
-    // loading (state, value) { state.loading = value },
-    // online (state) { state.online = true },
-    // offline (state) { state.online = false },
-    // qs (state, query) { return state.qs = query; },
-    // query (state, query) { 
-    //   let exists = state.queries.indexOf(query);
-    //   if (exists < 0) {
-    //     return state.queries.push(query) 
-    //   }
-    // },
-    // selection (state, link) { state.selection = link; return link  },
-    // updateTab(state, value) { state.scope = value }
+    },
   }
 });

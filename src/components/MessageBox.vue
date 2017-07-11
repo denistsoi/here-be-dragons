@@ -17,10 +17,10 @@
     </span>
     
   </div>
-  <div v-if="debug">
+  <!--<div v-if="debug">
     <span>{{ message }}</span>
     <span>{{ route }} / {{ token }}</span>
-  </div>
+  </div>-->
   </section>
 </template>
 

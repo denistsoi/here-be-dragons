@@ -7,25 +7,18 @@
 
 <script>
   import ContentContainer from './container/ContentContainer';
+  // const Sidebar = () => import('./components/Sidebar');
   import Sidebar from './components/Sidebar';
   export default {
     components: {
       ContentContainer,
       Sidebar,
     },
-    computed: {
-      // location() {
-      //   return this.$store.getters.location;
-      // }
-    },
-    created() {
-
-    }
   }
 </script>
 
 <style lang="scss">
-  @import './base-styles/vars';
+  @import './common-styles/vars';
   
   body {
     margin: 0;
@@ -46,6 +39,6 @@
     margin: 0;
   }
   
-  @import './base-styles/font';
+  @import './common-styles/font';
 
 </style>
