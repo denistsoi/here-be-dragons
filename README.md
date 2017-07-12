@@ -9,7 +9,6 @@ A visualisation challenge to interact with lalamove's mockAPI.
     npm install
     npm start
 
-
 ### Peer Dependancies
 
     git clone git@github.com:denistsoi/odyssey.git
@@ -19,19 +18,18 @@ A visualisation challenge to interact with lalamove's mockAPI.
 
 ### project directory
 
-    docs/
+    docs/                   // docs to keep track of research/thoughts
     public/
-    src/
-    test/
+    src/                    // entry file for client side SPA
+    test/               
     .dockerignore
     .gitignore
     Dockerfile
     index.js
     package.json
     README.md
-    Tasks.todo
+    Tasks.todo              // todo tasks (add to git to track tasks)
     webpack-dev.config.js
-
 
 
 ### author
