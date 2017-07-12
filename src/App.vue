@@ -7,7 +7,6 @@
 
 <script>
   import ContentContainer from './container/ContentContainer';
-  // const Sidebar = () => import('./components/Sidebar');
   import Sidebar from './components/Sidebar';
   export default {
     components: {

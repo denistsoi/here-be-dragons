@@ -18,12 +18,6 @@ export default {
     loading() {
       return this.$store.getters.loading;
     }
-    // location() {
-    //   return this.$store.getters.location;
-    // }
-  },
-  created() {
-
   }
 }
 </script>

@@ -17,12 +17,15 @@ export const StatusCodes = {
  */
 export const generateMarkers = (map, location) => {
   let el = document.createElement('div');
+  let height = 20, width = 10;
+
   el.className = 'marker';
-  el.style.width = '10px';
-  el.style.height = '10px';
+  
+  el.style.width = `${width}px`;
+  el.style.height = `${height}px`;
   
   new Marker(el,  {offset: 
-    [-10 / 2, -10 / 2] 
+    [-width / 2, -height / 2] 
   })
     .setLngLat(location)
     .addTo(map);

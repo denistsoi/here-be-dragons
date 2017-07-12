@@ -153,7 +153,7 @@ export default {
               // show route
               store.commit('message', { 
                 status: data.status, 
-                successMessage: 'successfully retrieved route' 
+                successMessage: 'Successfully retrieved route.' 
               });
               vm.generateRoute(data);
             }
@@ -173,7 +173,7 @@ export default {
               // show error after all failed retries
               store.commit('message', { 
                 error: true, 
-                errorMessage: 'Server has an error, please contact help@lalamove.com' 
+                errorMessage: 'Server has an error, please contact help@lalamove.com.' 
               });
               vm.$set(this, 'requesting', false);
             }
