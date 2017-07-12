@@ -8,7 +8,7 @@
     "build:dev": "webpack -w",
     "dev": "DEBUG=app nodemon index.js",
     "e2e": "testcafe chrome test/e2e.js",
-    "start": "node .",
+    "start": "npm run build && node .",
     "clean": "rimraf dist/ && mkdir dist/",
     "test": "mocha test"
   },

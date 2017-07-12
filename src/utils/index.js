@@ -15,20 +15,35 @@ export const StatusCodes = {
  * @param {*} map 
  * @param {lat/lng} location 
  */
-export const generateMarkers = (map, location) => {
-  let el = document.createElement('div');
-  let height = 20, width = 10;
-
-  el.className = 'marker';
+export const generateMarkers = (map, path) => {
   
-  el.style.width = `${width}px`;
-  el.style.height = `${height}px`;
-  
-  new Marker(el,  {offset: 
-    [-width / 2, -height / 2] 
-  })
-    .setLngLat(location)
+  // el.style.backgroundImage = require('../assets/marker.svg');
+  for (var i = 0; i < path.length; i++) {
+    let el = document.createElement('div');
+    let height = 40, width = 40;
+    
+    el.className = 'marker';
+    el.style.width = `${width}px`;
+    el.style.height = `${height}px`;
+    
+    if (i == 0) {
+      el.innerText = 'start'
+    } else if (i + 1 == path.length) {
+      el.innerText = 'end'
+    } else {
+      el.innerText = i + 1;
+    }
+    
+    new Marker(el,  {offset: 
+      [-width / 2, -height / 2] 
+    })
+    .setLngLat(path[i])
     .addTo(map);
+  
+};
+
+
+  
 }
 
 /**

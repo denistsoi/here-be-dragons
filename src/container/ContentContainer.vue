@@ -1,7 +1,7 @@
 <template>
   <div id="content">
     <ui-loader v-if="loading"></ui-loader>
-    <map-box></map-box>
+    <map-box v-show="!loading"></map-box>
   </div>  
 </template>
 

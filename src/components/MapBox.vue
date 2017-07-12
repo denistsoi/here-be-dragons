@@ -85,8 +85,9 @@ export default {
 
       for (var i = 0; i < path.length; i++) {
         generatePath(i, vm.map, path);
-        generateMarkers(vm.map, path[i]);
       }
+
+      generateMarkers(vm.map, path);
       
       let bounds = path.reduce(function(bounds, coord) {
           return bounds.extend(coord);
@@ -254,7 +255,12 @@ export default {
 }
 
 .marker {
-  background: black;
+  background: white;
+  border: 1px solid;
+  color: $button-color;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 40px;
 }
 .create-route {
   text-align: center;
