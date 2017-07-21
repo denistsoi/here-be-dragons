@@ -1,9 +1,9 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import navigation from './navigation';
+import navigation from './navigation'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
@@ -51,7 +51,7 @@ export default new Vuex.Store({
           lng: 103.8198,
           lat: 1.3521
         },
-        zoom: 9        
+        zoom: 9
       }
     },
     map: null,
@@ -59,7 +59,12 @@ export default new Vuex.Store({
     navigation: navigation,
     path: null,
     route: null,
-    token: null
+    suggestions: null,
+    token: null,
+    waypoints: [{
+      value: 'start'
+    }],
+
   },
   getters: {
     active: state => { return state.active },
@@ -71,36 +76,58 @@ export default new Vuex.Store({
     navigation: state => { return state.navigation },
     path: state => { return state.path },
     route: state => { return state.route },
-    token: state => { return state.token }
+    suggestions: state => { return state.suggestions },
+    token: state => { return state.token },
+    waypoints: state => { return state.waypoints }
   },
   mutations: {
     active (state, id) {
-      return state.active = id;
+      state.active = id
+      return state.active
     },
     loading (state, val) {
-      return state.loading = val;
+      state.loading = val
+      return state.loading
     },
     location (state, location) {
       let coord = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
-      };
-      return state.location = coord;
+      }
+      state.location = coord
+      return state.location
     },
     message (state, message) {
-      return state.message = message;
+      state.message = message
+      return state.message
     },
     path (state, route) {
       let path = route.path.map(step => {
-        return [step[1], step[0]];
-      });
-      return state.path = path;
+        return [step[1], step[0]]
+      })
+      state.path = path
+      return state.path
     },
     saveRoute (state, route) {
-      return state.route = route;
+      state.route = route
+      return state.route
+    },
+    saveSuggestions (state, suggestions) {
+      state.suggestions = suggestions
+      return state.suggestions
+    },
+    removeWaypoint (state, index) {
+      console.log('before', state.waypoints)
+      state.waypoints.splice(index, 1)
+      console.log('after', state.waypoints)
+      return state.waypoints
+    },
+    saveWaypoint (state, waypoint) {
+      state.waypoints.push(waypoint)
     },
     token (state, token) {
-      return state.token = token;
-    },
+      state.token = token
+      return state.token
+    }
   }
-});
+})

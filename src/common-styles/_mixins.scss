@@ -56,3 +56,18 @@
     transition: all .3s ease;
   }
 }
+
+@mixin placeholder($color: white) {
+  *::-webkit-input-placeholder {
+      color: $color;
+  }
+  *:-moz-placeholder {
+      color: $color;
+  }
+  *::-moz-placeholder {
+      color: $color;
+  }
+  *:-ms-input-placeholder {
+      color: $color;
+  }  
+}

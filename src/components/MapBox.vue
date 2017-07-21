@@ -1,15 +1,17 @@
 <template>
   <div id="mapbox-item">
-    <div class="create-route">
-      <button 
+    <!--<div class="create-route">-->
+      <!--<input placeholder="starting">
+      <input placeholder="finish">-->
+      <!--<button 
               v-bind:class="{ requesting: requesting, disabled: route }"
               v-bind:disabled="requesting || route"
               @click="getToken()">
         <span v-if="!route">{{ !requesting ? 'Request Route' : 'Requesting...' }}</span>
         <span v-if="route">{{ 'Route Generated' }}</span>
-      </button>
-      <MessageBox :message="message"></MessageBox>
-    </div>
+      </button>-->
+      <!--<MessageBox :message="message"></MessageBox>
+    </div>-->
   </div>  
 </template>
 
@@ -255,28 +257,5 @@ export default {
 
 .marker {
   background: black;
-}
-.create-route {
-  text-align: center;
-  background: transparent;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  padding-top: $header-height; 
-  // padding: 8px 0;
-  button {
-    @include createButton();
-    &.disabled,
-    &.disabled:hover,
-    &.requesting,
-    &.requesting:hover {
-      background-color: $button-color;
-      transition: all .3s ease;
-      color: $button-text-color;
-    }
-    
-  }
 }
 </style>

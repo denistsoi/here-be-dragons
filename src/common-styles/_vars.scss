@@ -10,6 +10,9 @@ $header-color: #666;
 $light-font-color: #efefef;
 
 $highlight-color: #cf653e;
+$sidebar-color: $highlight-color;
+
+$dashed-border-style: 1px dashed $sidebar-color;
 
 $default-background-color: rgba(251, 251, 251, .99);
 $sidebar-background-color: $default-background-color;
