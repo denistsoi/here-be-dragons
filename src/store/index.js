@@ -61,10 +61,7 @@ export default new Vuex.Store({
     route: null,
     suggestions: null,
     token: null,
-    waypoints: [{
-      value: 'start'
-    }],
-
+    waypoints: []
   },
   getters: {
     active: state => { return state.active },

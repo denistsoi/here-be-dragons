@@ -1,23 +1,16 @@
 <template>
   <div class="create-route-container">
     <div class="create-route">
-      <div v-for="(waypoint, index) in waypoints">
-        <input-route :waypoint="waypoint" :index="index"></input-route> 
-      </div>
+      <input-route></input-route>
 
-      <!-- <input-route type="start"></input-route>
-      <input-route type="finish"></input-route>
-      <span @click="addWayPoint">+</span> -->
-    </div>
-
-    <div class="auto-complete">
-      <!-- <pre><code>{{ suggestions | json}}</code></pre> -->
-      <!-- <suggestions ></suggestions-list>  -->
-        <!-- <div class="suggestion" v-for="suggestion in suggestions"> 
-          <span>{{ suggestion.matching_place_name ? suggestion.matching_place_name : suggestion.text }}</span>
-        </div> -->
+      <div v-for="waypoint in waypoints" class="waypoints">
+        <div class="waypoint">
+          <span class="address">{{ waypoint.route }}</span><span class="dismiss" v-if="waypoint" @click="clearInput">X</span>
+        </div>
       </div>
     </div>
+
+    
   </div>
 </template>
 
@@ -39,8 +32,14 @@ export default {
   mounted() {
   },
   methods: {
-    addWayPoint() {
-
+    clearInput() {
+      let store = this.$store;
+      let waypoint = this.waypoint;
+      
+      this.$refs.address.clear();
+      console.log(this);
+      // store.commit('removeWaypoint', waypoint.id);
+      // console.log(store, waypoint);
     }
   }
 }
@@ -99,5 +98,27 @@ export default {
   span {
     font-size: 12px;
   }
+}
+
+.dismiss:hover {
+  cursor: pointer;
+}
+.waypoint {
+  display: flex;
+}
+.address {
+  width: 90%;
+  display: block;
+  @include ellipsis();
+}
+
+.dismiss {
+  font-size: 12px;
+  border-radius: 50%;
+  width: 20px;
+  height: 24px;
+  display: inline-block;
+  text-align: center;
+  line-height: 24px;  
 }
 </style>
