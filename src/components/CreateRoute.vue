@@ -3,11 +3,13 @@
     <div class="create-route">
       <input-route></input-route>
 
-      <div v-for="waypoint in waypoints" class="waypoints">
-        <div class="waypoint">
-          <span class="address">{{ waypoint.route }}</span><span class="dismiss" v-if="waypoint" @click="clearInput">X</span>
+      <draggable v-model="waypoints">
+        <div v-for="waypoint in waypoints" class="waypoints">
+          <div class="waypoint">
+            <span class="address">{{ waypoint.route }}</span><span class="dismiss" v-if="waypoint" @click="clearInput">X</span>
+          </div>
         </div>
-      </div>
+      </draggable>
     </div>
 
     
@@ -16,18 +18,28 @@
 
 <script>
 import InputRoute from "./InputRoute";
+import draggable from 'vuedraggable';
 
 export default {
   components: {
+    draggable,
     InputRoute
   },
   computed: {
-    waypoints() {
-      return this.$store.getters.waypoints;
-    },
-    suggestions() {
-      return this.$store.getters.suggestions;
+    waypoints: {
+      get() {
+        return this.$store.getters.waypoints;
+      },
+      set(value) {
+        this.$store.commit('updateList', value)
+      }
     }
+    // waypoints() {
+    //   return this.$store.getters.waypoints;
+    // },
+    // suggestions() {
+    //   return this.$store.getters.suggestions;
+    // }
   },
   mounted() {
   },

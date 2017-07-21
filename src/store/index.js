@@ -125,6 +125,9 @@ export default new Vuex.Store({
     token (state, token) {
       state.token = token
       return state.token
+    },
+    updateList (state, value) {
+      return state.waypoints = value;
     }
   }
 })
