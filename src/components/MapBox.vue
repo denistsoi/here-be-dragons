@@ -34,18 +34,11 @@ export default {
   data() {
     return {
       map: null,
-      requesting: false
+      requesting: false,
+
     }
   },
-  computed: {
-    route() {
-      return this.$store.getters.route;
-    },
-    message() {
-      return this.$store.getters.message;
-    },
-
-  },
+  computed: {},
   mounted() {
     const store = this.$store;
 
@@ -62,6 +55,7 @@ export default {
       maxBounds: bounds
     });
 
+    // add mapbox navigation
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     // we want to reference this later
@@ -72,175 +66,61 @@ export default {
     map.on('load', ()=> {
       store.commit('loading', false);
     });
-  },
-  methods: {
-    generateRoute(route) {
-      let vm = this;
+
+    // use watch (but could use computed values)
+    this.$store.watch( state => {
+      return state.waypoints;
+    }, ()=>{
+      // get waypoints from mapbox
+      
       let store = this.$store;
-      store.commit('saveRoute', route);
-      store.commit('path', route);
-
-      window.map = vm.map;
-      window.store = store;
+      let waypoints = store.getters.waypoints;
       
-      let path = store.getters.path;
+      if (waypoints.length >= 2) {
+        let coordinates = waypoints.map(waypoint => {
+            return [waypoint.longitude, waypoint.latitude]
+        });
 
-      for (var i = 0; i < path.length; i++) {
-        generatePath(i, vm.map, path);
-        generateMarkers(vm.map, path[i]);
-      }
-      
-      let bounds = path.reduce(function(bounds, coord) {
-          return bounds.extend(coord);
-      }, new mapboxgl.LngLatBounds(path[0], path[0]));
-      
-      let centerBounds = function(bounds) {
-        let lat = (bounds._ne.lat + bounds._sw.lat) / 2;
-        let lng = (bounds._ne.lng + bounds._sw.lng) / 2;
-
-        return {
-          lat,
-          lng
+        // set initial line
+        if (!map.getSource('route')) {
+          let route = {
+            id: 'route',
+            type: 'line',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'LineString',
+                  coordinates: coordinates
+                }
+              }
+            },
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': "#ff0",
+              'line-width': 4
+            }
+          };
+          return map.addLayer(route)
         }
-      }
 
-      map.fitBounds(bounds, { 
-        padding: { 
-          top: 100
-        }, 
-      });
-      map.flyTo({
-        center: centerBounds(bounds),
-        zoom: 11,
-        bearing: -22,
-        pitch: 25,
-      })
-
-      vm.$set(this, 'requesting', false);
-    },
-    getRoute(token, attempts) {
-      let vm = this;
-      let store = this.$store;
-      
-      if (!attempts) {
-        attempts = 1;
-      }
-
-      if (!store.getters.route) {
-        vm.$set(this, 'requesting', true);
-
-        fetch(`http://localhost:3001/route/${token}`)
-          .then(response => handleResponse(response))
-          .then(data => {
-            if (data.status == StatusCodes.failure) {
-              // show failure
-              store.commit('message', {
-                error: true,
-                status: data.status,
-                errorMessage: data.error + '... Try again'
-              });
-              vm.$set(this, 'requesting', false);
-            } else if (data.status == StatusCodes.progress) {
-              // show in progress (try again)
-              store.commit('message',  { 
-                status: 'progress', 
-                infoMessage: `Attempt #${attempts}: Server in progress... Retrying... `
-              });
-              
-              setTimeout(()=>{
-                attempts++;
-                vm.getRoute(token, attempts);
-              }, 2000);
-            } else if (data.status == StatusCodes.success) {
-              // show route
-              store.commit('message', { 
-                status: data.status, 
-                successMessage: 'Successfully retrieved route.' 
-              });
-              vm.generateRoute(data);
-            }
-          })
-          .catch(error => {
-            store.commit('message', { 
-              error: true,
-              errorMessage: `Attempt #${attempts}: Request at generating route failed. Retrying... `
-            })
-            
-            if (attempts < 5) {
-              attempts++;
-              setTimeout(() => {
-                vm.getRoute(token, attempts) 
-              }, 2000);
-            } else {
-              // show error after all failed retries
-              store.commit('message', { 
-                error: true, 
-                errorMessage: 'Server has an error, please contact help@lalamove.com.' 
-              });
-              vm.$set(this, 'requesting', false);
-            }
-            handleError(error)
-          });
-      }
-      
-    },
-    getToken(attempts) {
-      let vm = this;
-      let store = this.$store;
-
-      if (!attempts) {
-        attempts = 1;
-      } 
-      
-      let token = store.getters.token;
-      if (token) {
-        return vm.getRoute(token);
-      }
-      
-      vm.$set(this, 'requesting', true);
-
-      // TODO: suggestion
-      // push to array to handle multiple routes
-      fetch('http://localhost:3001/route', {
-        method: 'post'
-      })
-        .then(response => handleResponse(response))
-        .then(data => {          
-          store.commit('token', data.token);
-          
-          store.commit('message', { 
-            success: 'token', 
-            successMessage: 'Successfully retrieved token, requesting route...'
-          })
-          
-          setTimeout(() => {
-            vm.getRoute(data.token) 
-          }, 2000);
-        })
-        .catch(error => {
-
-          store.commit('message', { 
-            error: true,
-            errorMessage: `Attempt #${attempts}: Request at access token failed. Retrying... `
-          })
-          handleError(error);
-          
-          if (attempts < 5) {
-            setTimeout(() => {
-              attempts++;
-              vm.getToken(attempts) 
-            }, 2000);
-          } else {
-            // show error after all failed retries
-            store.commit('message', {
-              error: true,
-              errorMessage: 'Server has an error, please contact help@lalamove.com'
-            });
-            vm.$set(this, 'requesting', false);
+        map.getSource('route').setData({
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates
           }
         });
-    }
-  }
+      }
+
+    })
+  },
 }
 </script>
 

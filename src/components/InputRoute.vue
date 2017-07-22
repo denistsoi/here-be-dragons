@@ -27,9 +27,10 @@ export default {
   },
   methods: {
     getAddressData (addressData, placeResultData) {
-        this.address = addressData; 
-        this.$store.commit('saveWaypoint', this.address);
-        this.$refs.address.clear();
+      this.address = addressData; 
+      this.$store.commit('saveWaypoint', this.address);
+      // this.$store.commit('rerender')
+      this.$refs.address.clear();
     },
   }
 }

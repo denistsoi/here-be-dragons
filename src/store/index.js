@@ -98,21 +98,21 @@ export default new Vuex.Store({
       state.message = message
       return state.message
     },
-    path (state, route) {
-      let path = route.path.map(step => {
-        return [step[1], step[0]]
-      })
-      state.path = path
-      return state.path
-    },
-    saveRoute (state, route) {
-      state.route = route
-      return state.route
-    },
-    saveSuggestions (state, suggestions) {
-      state.suggestions = suggestions
-      return state.suggestions
-    },
+    // path (state, route) {
+    //   let path = route.path.map(step => {
+    //     return [step[1], step[0]]
+    //   })
+    //   state.path = path
+    //   return state.path
+    // },
+    // saveRoute (state, route) {
+    //   state.route = route
+    //   return state.route
+    // },
+    // saveSuggestions (state, suggestions) {
+    //   state.suggestions = suggestions
+    //   return state.suggestions
+    // },
     removeWaypoint (state, index) {
       console.log('before', state.waypoints)
       state.waypoints.splice(index, 1)

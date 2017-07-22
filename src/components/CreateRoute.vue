@@ -2,16 +2,13 @@
   <div class="create-route-container">
     <div class="create-route">
       <input-route></input-route>
-
-      <draggable v-model="waypoints">
-        <div v-for="waypoint in waypoints" class="waypoints">
-          <div class="waypoint">
-            <span class="address">{{ waypoint.route }}</span><span class="dismiss" v-if="waypoint" @click="clearInput">X</span>
-          </div>
-        </div>
-      </draggable>
     </div>
 
+    <draggable v-model="waypoints" class="waypoints">
+      <div v-for="waypoint in waypoints" class="waypoint">
+        <span class="address">{{ waypoint.route }}</span><span class="dismiss" v-if="waypoint" @click="clearInput">X</span>
+      </div>
+    </draggable>
     
   </div>
 </template>
@@ -32,6 +29,7 @@ export default {
       },
       set(value) {
         this.$store.commit('updateList', value)
+        // this.$store.commit('rerenderMap', true)
       }
     }
     // waypoints() {
@@ -48,7 +46,7 @@ export default {
       let store = this.$store;
       let waypoint = this.waypoint;
       
-      this.$refs.address.clear();
+      // this.$refs.address.clear();
       console.log(this);
       // store.commit('removeWaypoint', waypoint.id);
       // console.log(store, waypoint);
@@ -114,6 +112,10 @@ export default {
 
 .dismiss:hover {
   cursor: pointer;
+}
+.waypoints {
+  padding: 2*$base-height $base-height 0;
+  text-align: left;
 }
 .waypoint {
   display: flex;

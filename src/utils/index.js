@@ -53,8 +53,8 @@ export const generatePath = (i, map, path) => {
         geometry: {
           type: 'LineString',
           coordinates: [
-            path[i],
-            path[i + 1]
+            path[i].latitude,
+            path[i].longitude
           ]
         }
       }
