@@ -105,10 +105,10 @@ export default new Vuex.Store({
     //   state.path = path
     //   return state.path
     // },
-    // saveRoute (state, route) {
-    //   state.route = route
-    //   return state.route
-    // },
+    saveRoute (state, route) {
+      state.route = route
+      return state.route
+    },
     // saveSuggestions (state, suggestions) {
     //   state.suggestions = suggestions
     //   return state.suggestions

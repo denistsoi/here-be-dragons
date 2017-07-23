@@ -83,39 +83,41 @@ export default {
 
         // set initial line
         if (!map.getSource('route')) {
-          let route = {
-            id: 'route',
-            type: 'line',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'LineString',
-                  coordinates: coordinates
+          
+          function setTemplate(coordinates) {
+            return {
+              id: 'route',
+              type: 'line',
+              source: {
+                type: 'geojson',
+                data: {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: coordinates
                 }
+              },
+              layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+              },
+              paint: {
+                'line-color': "#CF653E",
+                'line-width': 4
               }
-            },
-            layout: {
-              'line-join': 'round',
-              'line-cap': 'round'
-            },
-            paint: {
-              'line-color': "#ff0",
-              'line-width': 4
             }
-          };
-          return map.addLayer(route)
+          }
+          
+          // let route = setTemplate(coordinates);
+
+          let path = setTemplate(store.getters.route);
+          console.log(path);
+          return map.addLayer(path)
         }
 
         map.getSource('route').setData({
           type: 'Feature',
           properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: coordinates
-          }
+          geometry: store.getters.route
         });
       }
 
