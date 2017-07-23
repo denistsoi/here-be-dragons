@@ -68,60 +68,80 @@ export default {
     });
 
     // use watch (but could use computed values)
-    this.$store.watch( state => {
+    store.watch( state => {
       return state.waypoints;
     }, ()=>{
       // get waypoints from mapbox
       
-      let store = this.$store;
       let waypoints = store.getters.waypoints;
+      // let waypoints = this.$store.getters.waypoints;
       
-      if (waypoints.length >= 2) {
-        let coordinates = waypoints.map(waypoint => {
-            return [waypoint.longitude, waypoint.latitude]
-        });
+      let path = waypoints.map(waypoint => {
+        let coord = [waypoint.longitude, waypoint.latitude].join(',');
+        return coord;
+      });
 
-        // set initial line
-        if (!map.getSource('route')) {
-          
-          function setTemplate(coordinates) {
-            return {
-              id: 'route',
-              type: 'line',
-              source: {
-                type: 'geojson',
-                data: {
-                  type: 'Feature',
-                  properties: {},
-                  geometry: coordinates
-                }
-              },
-              layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-              },
-              paint: {
-                'line-color': "#CF653E",
-                'line-width': 4
+      let url = "https://api.mapbox.com/directions/v5/mapbox/driving/";
+
+      if (waypoints.length >= 2) {
+        fetch(`${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+            store.commit('saveRoute', data.routes[0].geometry);
+          })
+          .catch(err => {
+            console.log('error', err);
+          });
+      }      
+      // if (waypoints.length >= 2) {
+      // }
+    })
+
+    // update route whenever route is set
+    store.watch(state => {
+      return state.route
+    }, () => {
+
+      if (!map.getSource('route')) {
+        console.log('first route');
+        function setTemplate(coordinates) {
+          return {
+            id: 'route',
+            type: 'line',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'Feature',
+                properties: {},
+                geometry: coordinates
               }
+            },
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': "#CF653E",
+              'line-width': 4
             }
           }
-          
-          // let route = setTemplate(coordinates);
-
-          let path = setTemplate(store.getters.route);
-          console.log(path);
-          return map.addLayer(path)
         }
+        
+        // let route = setTemplate(coordinates);
 
-        map.getSource('route').setData({
-          type: 'Feature',
-          properties: {},
-          geometry: store.getters.route
-        });
+        let path = setTemplate(store.getters.route);
+        console.log(path);
+        return map.addLayer(path)
       }
 
-    })
+      console.log('second route');
+      map.getSource('route').setData({
+        type: 'Feature',
+        properties: {},
+        geometry: store.getters.route
+      });
+    });
   },
 }
 </script>
