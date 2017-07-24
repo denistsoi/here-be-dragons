@@ -28,8 +28,7 @@ export default {
   methods: {
     getAddressData (addressData, placeResultData) {
       this.address = addressData; 
-      let store = this.$store;
-      store.commit('saveWaypoint', this.address);
+      this.$store.commit('saveWaypoint', this.address);
       this.$refs.address.clear();
     },
   }

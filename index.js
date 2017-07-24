@@ -9,8 +9,6 @@ const PORT = process.env.PORT || 3000;
 // app.post('/route', (req, res) => {
 // });
 
-// app.get('/route/:token', (req, res) => {
-// });
 app.use(express.static(`${__dirname}/dist`));
 app.use(express.static(`${__dirname}/public`));
 

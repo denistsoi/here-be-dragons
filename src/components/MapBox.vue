@@ -82,20 +82,23 @@ export default {
       });
 
       let url = "https://api.mapbox.com/directions/v5/mapbox/driving/";
+      let mapbox_url = `${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`;
+
+      // waypoints.forEach(waypoint => {
+      //   generateMarkers(waypoint)
+      // })
 
       if (waypoints.length >= 2) {
-        fetch(`${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`)
+        // mapbox
+        fetch(mapbox_url)
           .then(response => response.json())
           .then(data => {
-            console.log(data)
             store.commit('saveRoute', data.routes[0].geometry);
           })
           .catch(err => {
             console.log('error', err);
           });
-      }      
-      // if (waypoints.length >= 2) {
-      // }
+      }
     })
 
     // update route whenever route is set
@@ -128,10 +131,7 @@ export default {
           }
         }
         
-        // let route = setTemplate(coordinates);
-
         let path = setTemplate(store.getters.route);
-        console.log(path);
         return map.addLayer(path)
       }
 

@@ -1,0 +1,395 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJ-SKF_1oABDQR-QMDLrpbMyc",
+         "types" : [ "street_address" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJ7YQhD8gABDQR6c0zxPm-TZs",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 22.3207721,
+               "lng" : 114.1831357
+            },
+            "southwest" : {
+               "lat" : 22.2770438,
+               "lng" : 114.1684019
+            }
+         },
+         "copyrights" : "Map data ©2017 Google",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "6.4 km",
+                  "value" : 6361
+               },
+               "duration" : {
+                  "text" : "19 mins",
+                  "value" : 1125
+               },
+               "end_address" : "39 Mong Kok Rd, Mong Kok, Hong Kong",
+               "end_location" : {
+                  "lat" : 22.3207721,
+                  "lng" : 114.1686396
+               },
+               "start_address" : "164 Wan Chai Rd, Wan Chai, Hong Kong",
+               "start_location" : {
+                  "lat" : 22.2770438,
+                  "lng" : 114.1769361
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "0.3 km",
+                        "value" : 292
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 91
+                     },
+                     "end_location" : {
+                        "lat" : 22.2779551,
+                        "lng" : 114.1795411
+                     },
+                     "html_instructions" : "Head \u003cb\u003enortheast\u003c/b\u003e on \u003cb\u003eWan Chai Rd\u003c/b\u003e toward \u003cb\u003eHeard St\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "o~}fC{d{wTi@uAo@_B[k@ACKSMUCG?IAECuAIcAAMEY?AI["
+                     },
+                     "start_location" : {
+                        "lat" : 22.2770438,
+                        "lng" : 114.1769361
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.1 km",
+                        "value" : 101
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 32
+                     },
+                     "end_location" : {
+                        "lat" : 22.2774875,
+                        "lng" : 114.1800593
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eMorrison Hill Rd\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "gd~fCcu{wTMo@EKdA]j@M"
+                     },
+                     "start_location" : {
+                        "lat" : 22.2779551,
+                        "lng" : 114.1795411
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.1 km",
+                        "value" : 110
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 72
+                     },
+                     "end_location" : {
+                        "lat" : 22.2776083,
+                        "lng" : 114.1811055
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e onto \u003cb\u003eSharp St W\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "ia~fCkx{wTQ_AGe@AGBcB"
+                     },
+                     "start_location" : {
+                        "lat" : 22.2774875,
+                        "lng" : 114.1800593
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "11 m",
+                        "value" : 11
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 11
+                     },
+                     "end_location" : {
+                        "lat" : 22.277706,
+                        "lng" : 114.1811098
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e onto \u003cb\u003eCanal Rd W\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "ab~fC}~{wTS?"
+                     },
+                     "start_location" : {
+                        "lat" : 22.2776083,
+                        "lng" : 114.1811055
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 178
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 27
+                     },
+                     "end_location" : {
+                        "lat" : 22.2792957,
+                        "lng" : 114.1812203
+                     },
+                     "html_instructions" : "Take the ramp on the \u003cb\u003eright\u003c/b\u003e to \u003cb\u003eCentral\u003c/b\u003e/\u003cb\u003eKowloon (W)\u003c/b\u003e/\u003cb\u003e中區\u003c/b\u003e/\u003cb\u003e九龍（西）\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "ub~fC}~{wTMEMCyA?{CES?WE"
+                     },
+                     "start_location" : {
+                        "lat" : 22.277706,
+                        "lng" : 114.1811098
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.3 km",
+                        "value" : 320
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 52
+                     },
+                     "end_location" : {
+                        "lat" : 22.2818025,
+                        "lng" : 114.1802012
+                     },
+                     "html_instructions" : "Merge onto \u003cb\u003eRoute 1\u003c/b\u003e",
+                     "maneuver" : "merge",
+                     "polyline" : {
+                        "points" : "sl~fCs_|wTQDQFg@LUF[HE@o@TaBl@IDKDWXORGFQTGHGHMFKDO@M?OCKEMGKGGI"
+                     },
+                     "start_location" : {
+                        "lat" : 22.2792957,
+                        "lng" : 114.1812203
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "2.9 km",
+                        "value" : 2867
+                     },
+                     "duration" : {
+                        "text" : "4 mins",
+                        "value" : 264
+                     },
+                     "end_location" : {
+                        "lat" : 22.3056166,
+                        "lng" : 114.1814616
+                     },
+                     "html_instructions" : "Keep \u003cb\u003eright\u003c/b\u003e to stay on \u003cb\u003eRoute 1\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003ePartial toll road\u003c/div\u003e",
+                     "maneuver" : "keep-right",
+                     "polyline" : {
+                        "points" : "g|~fCgy{wTISCI?O?M@OBY?E@U?_@Ga@KYGGOK_Ag@e@_@]_@g@SYq@aB_Bc@U}@_@UGu@KM?SAK?I?c@BQ@UBucA|JkHr@mHr@g@Dg@FsBRiDXMBu@LMBi@FWBK@_@Bc@B_@CGAe@Ia@Ia@I_@Oa@M_A]iBm@]Mq@UgBi@}@Wk@OSCY?"
+                     },
+                     "start_location" : {
+                        "lat" : 22.2818025,
+                        "lng" : 114.1802012
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.9 km",
+                        "value" : 853
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 58
+                     },
+                     "end_location" : {
+                        "lat" : 22.311829,
+                        "lng" : 114.1769522
+                     },
+                     "html_instructions" : "Keep \u003cb\u003eright\u003c/b\u003e to stay on \u003cb\u003eRoute 1\u003c/b\u003e",
+                     "maneuver" : "keep-right",
+                     "polyline" : {
+                        "points" : "cqcgCca|wTU?O@QBOBODUHKHMJQNQRg@p@S\\GVU`@U^S\\UZY\\[Xc@`@qAh@c@Lk@Pk@N}A`@C@QJ{@d@}BtAeAf@}@f@YT]XGDcA~@a@XSL"
+                     },
+                     "start_location" : {
+                        "lat" : 22.3056166,
+                        "lng" : 114.1814616
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "25 m",
+                        "value" : 25
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 16
+                     },
+                     "end_location" : {
+                        "lat" : 22.3118411,
+                        "lng" : 114.1767065
+                     },
+                     "html_instructions" : "Take exit \u003cb\u003e7C\u003c/b\u003e for \u003cb\u003eWylie Road\u003c/b\u003e/\u003cb\u003e衛理道\u003c/b\u003e",
+                     "maneuver" : "ramp-left",
+                     "polyline" : {
+                        "points" : "}wdgC}d{wT?X?LAF"
+                     },
+                     "start_location" : {
+                        "lat" : 22.311829,
+                        "lng" : 114.1769522
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.6 km",
+                        "value" : 589
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 144
+                     },
+                     "end_location" : {
+                        "lat" : 22.3164603,
+                        "lng" : 114.1740335
+                     },
+                     "html_instructions" : "Keep \u003cb\u003eright\u003c/b\u003e at the fork to continue on \u003cb\u003eWylie Rd\u003c/b\u003e",
+                     "maneuver" : "fork-right",
+                     "polyline" : {
+                        "points" : "_xdgCmc{wT_@d@Wd@EDMJi@\\mAn@_ChAq@XSFyHfCsBx@_@LMH]TGFA@A@A?C@E@"
+                     },
+                     "start_location" : {
+                        "lat" : 22.3118411,
+                        "lng" : 114.1767065
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.4 km",
+                        "value" : 405
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 118
+                     },
+                     "end_location" : {
+                        "lat" : 22.3198747,
+                        "lng" : 114.1726677
+                     },
+                     "html_instructions" : "Continue onto \u003cb\u003eYim Po Fong St\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "{tegCurzwTa@Ds@PODi@NKBk@Rs@T}Ad@qA`@c@Ne@RUFeA^aAVUF"
+                     },
+                     "start_location" : {
+                        "lat" : 22.3164603,
+                        "lng" : 114.1740335
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.4 km",
+                        "value" : 414
+                     },
+                     "duration" : {
+                        "text" : "3 mins",
+                        "value" : 162
+                     },
+                     "end_location" : {
+                        "lat" : 22.3192194,
+                        "lng" : 114.1687075
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e onto \u003cb\u003eArgyle St\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "ejfgCejzwTNtAL~ABPFh@LlARlBJv@Dl@Ft@Hx@@PDjAHt@"
+                     },
+                     "start_location" : {
+                        "lat" : 22.3198747,
+                        "lng" : 114.1726677
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 171
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 60
+                     },
+                     "end_location" : {
+                        "lat" : 22.3207354,
+                        "lng" : 114.1684019
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003ePortland St\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "cffgCmqywTMB}BXi@FcAJu@J"
+                     },
+                     "start_location" : {
+                        "lat" : 22.3192194,
+                        "lng" : 114.1687075
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "25 m",
+                        "value" : 25
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 18
+                     },
+                     "end_location" : {
+                        "lat" : 22.3207721,
+                        "lng" : 114.1686396
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eMong Kok Rd\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "sofgCooywTEo@"
+                     },
+                     "start_location" : {
+                        "lat" : 22.3207354,
+                        "lng" : 114.1684019
+                     },
+                     "travel_mode" : "DRIVING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "o~}fC{d{wTyAuD]o@Yi@CQE{AKqA]gBEKdA]j@MQ_AIm@BcBS?[IuFEk@Ec@L_B`@gDnAaAjAORYL]@[IYOQ]CY@]DuAGa@KYWS_Ag@e@_@]_@g@SYq@aB_Bc@U}@_@UGu@Ka@AkADewAhNmJz@{B\\gBLg@EgASaAYaBk@aH{BiBg@m@Ce@@a@Fe@NYTc@b@{@nAGVU`@i@|@o@x@_Az@uBv@wA`@aBb@mAp@}BtAeAf@wA|@kCxBSL?XAT_@d@Wd@EDw@h@mExB_KhDsCfAk@^MJIBa@Ds@Py@Tw@VgGlB{@ZgCv@UFNtAPpBt@|GXnDN`CkC\\mBRu@JEo@"
+         },
+         "summary" : "Route 1",
+         "warnings" : [],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}

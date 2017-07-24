@@ -32,26 +32,7 @@ export default {
         // this.$store.commit('rerenderMap', true)
       }
     }
-    // waypoints() {
-    //   return this.$store.getters.waypoints;
-    // },
-    // suggestions() {
-    //   return this.$store.getters.suggestions;
-    // }
   },
-  mounted() {
-  },
-  methods: {
-    clearInput() {
-      let store = this.$store;
-      let waypoint = this.waypoint;
-      
-      // this.$refs.address.clear();
-      console.log(this);
-      // store.commit('removeWaypoint', waypoint.id);
-      // console.log(store, waypoint);
-    }
-  }
 }
 </script>
 
