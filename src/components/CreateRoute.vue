@@ -5,9 +5,11 @@
     </div>
 
     <draggable v-model="waypoints" class="waypoints">
-      <div v-for="waypoint in waypoints" class="waypoint">
-        <span class="address">{{ waypoint.route }}</span><span class="dismiss" v-if="waypoint" @click="clearInput">X</span>
-      </div>
+      <transition-group name="waypoint">
+        <div v-for="waypoint in waypoints" class="waypoint-item" v-bind:key="waypoint">
+          <span class="address">{{ waypoint.name }}</span><span class="dismiss" v-if="waypoint" @click="removeWaypoint">X</span>
+        </div>
+      </transition-group>
     </draggable>
     
   </div>
@@ -29,10 +31,14 @@ export default {
       },
       set(value) {
         this.$store.commit('updateList', value)
-        // this.$store.commit('rerenderMap', true)
       }
     }
   },
+  methods: {
+    removeWaypoint() {
+      console.log(this);
+    }
+  }
 }
 </script>
 
@@ -91,29 +97,69 @@ export default {
   }
 }
 
+.dismiss {
+  display: none;
+}
 .dismiss:hover {
   cursor: pointer;
 }
 .waypoints {
-  padding: 2*$base-height $base-height 0;
+  // padding: 2*$base-height $base-height 0;
+
   text-align: left;
 }
-.waypoint {
+.waypoint-item {
+  // declare waypoint vars
+  $waypoint-height: 5*$base-height;
   display: flex;
-}
-.address {
-  width: 90%;
-  display: block;
-  @include ellipsis();
+  
+  height: $waypoint-height;
+  padding: 0 $base-height;
+
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+
+  transition: all .3s ease-in;
+
+  &:hover {
+    @include pointer(); 
+    background: $highlight-color;
+    transition: all .3s ease-in;
+    .address,
+    .dismiss {
+      display: block;
+      color: $light-font-color;
+    }
+    
+  }
+  &.sortable-chosen, &.sortable-ghost,
+  &.sortable-chosen.sortable-ghost {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+  }
+
+  .address {
+    width: 90%;
+    display: block;
+    @include ellipsis();
+    line-height: $waypoint-height;
+  }
+
+  .dismiss {
+    font-size: 12px;
+    border-radius: 50%;
+    width: 20px;
+    height: 24px;
+    text-align: center;
+    line-height: $waypoint-height;  
+  }
 }
 
-.dismiss {
-  font-size: 12px;
-  border-radius: 50%;
-  width: 20px;
-  height: 24px;
-  display: inline-block;
-  text-align: center;
-  line-height: 24px;  
+.waypoint-enter-active, .waypoint-leave-active {
+  transition: opacity .5s
 }
+.waypoint-enter, .waypoint-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+
 </style>

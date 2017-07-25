@@ -3,6 +3,7 @@
         <vue-google-autocomplete
             ref="address"
             id="map"
+            types="geocode"
             classname="form-control"
             placeholder="Please type your address"
             v-on:placechanged="getAddressData"
@@ -27,7 +28,9 @@ export default {
   },
   methods: {
     getAddressData (addressData, placeResultData) {
+      // console.log(addressData, placeResultData);
       this.address = addressData; 
+      this.address.name = placeResultData.formatted_address;
       this.$store.commit('saveWaypoint', this.address);
       this.$refs.address.clear();
     },

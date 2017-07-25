@@ -5,11 +5,20 @@ $footer-height: $base-height * 3;
 $header-font: 'Playfair Display', serif;
 $base-font: 'Libre Franklin', sans-serif;
 
+
+$clouds: #ecf0f1;
+$carrot: #e67e22;
+
 $base-font-color: #444;
 $header-color: #666;
-$light-font-color: #efefef;
 
-$highlight-color: #cf653e;
+// $light-font-color: #efefef;
+ $light-font-color: $clouds;
+
+
+// $highlight-color: #cf653e;
+$highlight-color: $carrot;
+
 $sidebar-color: $highlight-color;
 
 $dashed-border-style: 1px dashed $sidebar-color;
