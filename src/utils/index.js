@@ -13,9 +13,12 @@ export const StatusCodes = {
  * generateMarkers
  * @description helper function to generate mapbox markers
  * @param {*} map
- * @param {lat/lng} location
+ * @param {} waypoint
  */
-export const generateMarkers = (map, location) => {
+export const generateMarkers = (map, waypoint) => {
+
+  let location = [waypoint.longitude, waypoint.latitude]
+
   let el = document.createElement('div')
   let height = 20
   let width = 10
@@ -25,7 +28,7 @@ export const generateMarkers = (map, location) => {
   el.style.width = `${width}px`
   el.style.height = `${height}px`
 
-  new Marker(el, {offset:
+  new Marker(el, { offset:
     [-width / 2, -height / 2]
   })
     .setLngLat(location)

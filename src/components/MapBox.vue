@@ -84,9 +84,9 @@ export default {
       let url = "https://api.mapbox.com/directions/v5/mapbox/driving/";
       let mapbox_url = `${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`;
 
-      // waypoints.forEach(waypoint => {
-      //   generateMarkers(waypoint)
-      // })
+      waypoints.forEach(waypoint => {
+        generateMarkers(map, waypoint)
+      })
 
       if (waypoints.length >= 2) {
         // mapbox
@@ -158,6 +158,7 @@ export default {
 }
 
 .marker {
-  background: black;
+  // background: black;
+  border: 1px solid black;
 }
 </style>

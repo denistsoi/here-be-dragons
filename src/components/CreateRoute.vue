@@ -6,8 +6,8 @@
 
     <draggable v-model="waypoints" class="waypoints">
       <transition-group name="waypoint">
-        <div v-for="waypoint in waypoints" class="waypoint-item" v-bind:key="waypoint">
-          <span class="address">{{ waypoint.name }}</span><span class="dismiss" v-if="waypoint" @click="removeWaypoint">X</span>
+        <div v-for="(waypoint, index) in waypoints" class="waypoint-item" v-bind:key="waypoint">
+          <span class="index">{{ index + 1 }}</span><span class="address">{{ waypoint.name }}</span><span class="dismiss" v-if="waypoint" @click="removeWaypoint">X</span>
         </div>
       </transition-group>
     </draggable>
@@ -98,16 +98,18 @@ export default {
 }
 
 .dismiss {
-  display: none;
-}
-.dismiss:hover {
-  cursor: pointer;
+  // display: none;
+  opacity: 0;
+  &:hover {
+    @include pointer();
+  }
 }
 .waypoints {
-  // padding: 2*$base-height $base-height 0;
-
+  padding: 2*$base-height 0;
   text-align: left;
 }
+
+
 .waypoint-item {
   // declare waypoint vars
   $waypoint-height: 5*$base-height;
@@ -123,21 +125,33 @@ export default {
 
   &:hover {
     @include pointer(); 
+    .dismiss {
+      opacity: 1;
+    }
+  }
+
+  &.sortable-chosen, &.sortable-ghost,
+  &.sortable-chosen.sortable-ghost {
     background: $highlight-color;
     transition: all .3s ease-in;
-    .address,
-    .dismiss {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+
+    span {
       display: block;
       color: $light-font-color;
     }
-    
-  }
-  &.sortable-chosen, &.sortable-ghost,
-  &.sortable-chosen.sortable-ghost {
-    cursor: grabbing;
-    cursor: -webkit-grabbing;
   }
 
+  // default span settings
+  span {
+    line-height: $waypoint-height;
+  }
+  
+  .index {
+    width: 20px;
+  }
+  
   .address {
     width: 90%;
     display: block;
