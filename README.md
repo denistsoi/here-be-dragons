@@ -1,6 +1,6 @@
 # lala-map
 
-A visualisation challenge to interact with lalamove's mockAPI.
+A visualisation challenge to interact with [odyssey](https://github.com/denistsoi/odyssey) mockAPI.
 
 ### how to use
 
