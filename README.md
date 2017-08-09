@@ -1,4 +1,4 @@
-# lala-map
+# here-be-dragons
 
 A visualisation challenge to interact with [odyssey](https://github.com/denistsoi/odyssey) mockAPI.
 
