@@ -25,11 +25,13 @@ export const generateMarkers = (map, waypoint) => {
 
   el.className = 'marker'
 
+  el.innerHTML = '<div class="pin"></div>';
+
   el.style.width = `${width}px`
   el.style.height = `${height}px`
 
   new Marker(el, { offset:
-    [-width / 2, -height / 2]
+    [-width / 2, -height]
   })
     .setLngLat(location)
     .addTo(map)

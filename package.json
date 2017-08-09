@@ -33,6 +33,7 @@
   "devDependencies": {
     "@google/maps": "^0.4.2",
     "assert": "^1.4.1",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.0",

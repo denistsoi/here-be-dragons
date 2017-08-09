@@ -1,0 +1,1 @@
+export const API_URL = 'https://smoggy-hunter.glitch.me';
