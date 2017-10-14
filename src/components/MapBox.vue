@@ -82,10 +82,11 @@ export default {
       });
 
       let url = "https://api.mapbox.com/directions/v5/mapbox/driving/";
+      
       let mapbox_url = `${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`;
 
-      waypoints.forEach(waypoint => {
-        generateMarkers(map, waypoint)
+      waypoints.forEach((waypoint, index) => {
+        generateMarkers(map, index, waypoint)
       })
 
       if (waypoints.length >= 2) {
@@ -187,9 +188,8 @@ export default {
   -ms-animation-duration: 1s;
   animation-duration: 1s;
 }
-
-.pin:after {
-  content: '';
+.pin .circle {
+  // content: '';
   width: 14px;
   height: 14px;
   margin: 8px 0 0 8px;
@@ -198,10 +198,4 @@ export default {
   position: absolute;
   border-radius: 50%;
 }
-  
-
-// .marker {
-//   // background: black;
-//   border: 1px solid black;
-// }
 </style>

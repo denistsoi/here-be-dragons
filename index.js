@@ -1,15 +1,20 @@
-// const express = require('express');
-import express from 'express';
+const express = require('express');
 const app = express();
 const debug = require('debug')
 const PORT = process.env.PORT || 3000;
-// const mockAPI = process.env.API || 'http://localhost:8080';
 
-// const request = require('request');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
 
-// app.post('/route', (req, res) => {
-// });
+const config = require('./webpack.config.js');
+const compiler = webpack(config);
 
+if (process.env.NODE_ENV === 'dev') {
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath
+  }));
+
+}
 app.use(express.static(`${__dirname}/dist`));
 app.use(express.static(`${__dirname}/public`));
 

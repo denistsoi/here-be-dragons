@@ -1,14 +1,15 @@
-☐ add some fancy styling - probably try to mimic branding/theme for lalamove
+✔ add some fancy styling - probably try to mimic branding/theme for lalamove @done (2017-10-14 12:02:15)
 ☐ need to minify build script for images
-☐ how about using open street map? - still need a directions api
+✔ how about using open street map? - still need a directions api @done (2017-10-14 12:02:17)
 
-☐ how do i draw a path? - geojson line
+✔ how do i draw a path? - geojson line @done (2017-10-14 12:02:21)
 
-☐ should i update marker/path based on current positon?
-☐ how does this respond on mobile?
+✔ should i update marker/path based on current positon? @done (2017-10-14 12:02:23)
+✔ how does this respond on mobile? @done (2017-10-14 12:02:25)
 
 ☐ maybe run this in electron to combat browser compatibility just incase -
+✔ what's a good UI for this application? - look at dribbble for inspiration @done (2017-10-14 12:02:35)
 
-☐ how about deck.gl to render? - maybe use electron for this
-
-☐ what's a good UI for this application? - look at dribbble for inspiration
+☐ show position of marker on map (i.e. highlight/go to)
+☐ implement remove marker from map
+☐ show total distance/time

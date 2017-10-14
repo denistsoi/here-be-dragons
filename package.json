@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "build:dev": "webpack -w",
-    "dev": "DEBUG=app nodemon . --exec babel-node",
+    "dev": "DEBUG=app NODE_ENV=dev nodemon .",
     "e2e": "testcafe chrome test/e2e.js",
     "start": "node .",
     "clean": "rimraf dist/ && mkdir dist/",
@@ -61,7 +61,8 @@
     "vue-template-compiler": "^2.3.4",
     "vuedraggable": "^2.14.1",
     "vuex": "^2.3.1",
-    "webpack": "^3.0.0",
+    "webpack": "^3.7.1",
+    "webpack-dev-middleware": "^1.12.0",
     "webpack-visualizer-plugin": "^0.1.11"
   }
 }

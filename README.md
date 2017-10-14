@@ -7,7 +7,7 @@ A visualisation challenge to interact with [odyssey](https://github.com/denistso
     git clone git@github.com:denistsoi/here-be-dragons.git
     cd here-be-dragons
     npm install
-    npm start
+    npm run dev
 
 ### Peer Dependancies
 
@@ -21,7 +21,7 @@ A visualisation challenge to interact with [odyssey](https://github.com/denistso
     docs/                   // docs to keep track of research/thoughts
     public/
     src/                    // entry file for client side SPA
-    test/               
+    test/
     .dockerignore
     .gitignore
     Dockerfile
