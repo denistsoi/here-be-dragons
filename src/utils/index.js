@@ -16,16 +16,18 @@ export const StatusCodes = {
  * @param {} waypoint
  */
 export const generateMarkers = (map, index, waypoint) => {
-  console.log('generate', index)
   let location = [waypoint.longitude, waypoint.latitude]
 
   let el = document.createElement('div')
   let height = 20
   let width = 10
 
-  el.className = 'marker'
-
-  el.innerHTML = `<div class="pin">${index + 1}</div>`;
+  el.className = 'marker';
+  
+  index != 0 ? 
+    el.innerHTML = `<div class="pin"></div>` :
+    el.innerHTML = `<div class="start pin"><div class="circle"></div></div>`;
+  
 
   el.style.width = `${width}px`
   el.style.height = `${height}px`

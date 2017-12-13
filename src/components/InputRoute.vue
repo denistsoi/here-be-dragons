@@ -23,12 +23,10 @@ export default {
     }
   },
   mounted() {
-    // set focus to next inserted if adding waypoint 
     this.$refs.address.focus();
   },
   methods: {
     getAddressData (addressData, placeResultData) {
-      // console.log(addressData, placeResultData);
       this.address = addressData; 
       this.address.name = placeResultData.formatted_address;
       this.$store.commit('saveWaypoint', this.address);

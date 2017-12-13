@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <sidebar></sidebar>
+    <!-- <sidebar></sidebar> -->
     <create-route></create-route>
     <content-container></content-container>
   </div>

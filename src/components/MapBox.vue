@@ -1,17 +1,5 @@
 <template>
   <div id="mapbox-item">
-    <!--<div class="create-route">-->
-      <!--<input placeholder="starting">
-      <input placeholder="finish">-->
-      <!--<button 
-              v-bind:class="{ requesting: requesting, disabled: route }"
-              v-bind:disabled="requesting || route"
-              @click="getToken()">
-        <span v-if="!route">{{ !requesting ? 'Request Route' : 'Requesting...' }}</span>
-        <span v-if="route">{{ 'Route Generated' }}</span>
-      </button>-->
-      <!--<MessageBox :message="message"></MessageBox>
-    </div>-->
   </div>  
 </template>
 
@@ -68,13 +56,11 @@ export default {
     });
 
     // use watch (but could use computed values)
-    store.watch( state => {
+    store.watch(state => {
       return state.waypoints;
     }, ()=>{
       // get waypoints from mapbox
-      
       let waypoints = store.getters.waypoints;
-      // let waypoints = this.$store.getters.waypoints;
       
       let path = waypoints.map(waypoint => {
         let coord = [waypoint.longitude, waypoint.latitude].join(',');
@@ -85,9 +71,12 @@ export default {
       
       let mapbox_url = `${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`;
 
-      waypoints.forEach((waypoint, index) => {
-        generateMarkers(map, index, waypoint)
-      })
+      // fix this (too many markers generated)
+      // waypoints.forEach((waypoint, index) => {
+      //   generateMarkers(map, index, waypoint)
+      // })
+
+      console.log(waypoints);
 
       if (waypoints.length >= 2) {
         // mapbox
@@ -108,7 +97,6 @@ export default {
     }, () => {
 
       if (!map.getSource('route')) {
-        console.log('first route');
         function setTemplate(coordinates) {
           return {
             id: 'route',
@@ -136,7 +124,6 @@ export default {
         return map.addLayer(path)
       }
 
-      console.log('second route');
       map.getSource('route').setData({
         type: 'Feature',
         properties: {},
@@ -187,6 +174,11 @@ export default {
   -o-animation-duration: 1s;
   -ms-animation-duration: 1s;
   animation-duration: 1s;
+  opacity: 0.5;
+}
+
+.start.pin {
+  opacity: .75;
 }
 .pin .circle {
   // content: '';
