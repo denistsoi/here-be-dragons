@@ -2,59 +2,22 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import navigation from './navigation'
+import mapboxgl from 'mapbox-gl';
 
+import { generateMarker } from '../utils/';
+import locations from './locations';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  strict: true,
   state: {
     active: null,
     debug: process.env.DEBUG,
     language: 'english',
     loading: false,
     location: {},
-    locations: {
-      'hong-kong': {
-        center: {
-          lng: 114.21512528562675,
-          lat: 22.33767556806147
-        },
-        zoom: 9.5
-      },
-      'taipei': {
-        // 25.0330° N, 121.5654° E
-        center: {
-          lng: 121.5654,
-          lat: 25.0330
-        },
-        zoom: 9
-      },
-      'manila': {
-        // 14.5995° N, 120.9842° E
-        center: {
-          lng: 120.9842,
-          lat: 14.5995
-        },
-        zoom: 9
-      },
-      'bangkok': {
-        // 13.7563° N, 100.5018° E
-        center: {
-          lng: 100.5018,
-          lat: 13.7563
-        },
-        zoom: 9
-      },
-      'singapore': {
-        // 1.3521° N, 103.8198° E
-        center: {
-          lng: 103.8198,
-          lat: 1.3521
-        },
-        zoom: 9
-      }
-    },
-    map: null,
+    locations: locations,
+    map: {},
+    markers: [],
     message: null,
     navigation: navigation,
     path: null,
@@ -68,16 +31,69 @@ export default new Vuex.Store({
     language: state => { return state.language },
     loading: state => { return state.loading },
     location: state => { return state.location },
-    map: state => { return state.map },
+    markers: state => () => { return state.markers },
     message: state => { return state.message },
     navigation: state => { return state.navigation },
     path: state => { return state.path },
-    route: state => { return state.route },
+    route: state => () => { return state.route },
     suggestions: state => { return state.suggestions },
     token: state => { return state.token },
     waypoints: state => { return state.waypoints }
   },
-  mutations: {
+  actions: {
+    saveWaypoint({ dispatch, commit, state }, waypoint) {
+      commit('saveWaypoint', waypoint)
+      dispatch('generateRoute')
+    },
+    loadMap({ commit }) {
+      let bounds = [
+        [113.23507613916462, 21.8603418729641],
+        [115.05259007364214, 22.777303015462593]
+      ];
+      
+      var map = new mapboxgl.Map({
+        container: 'mapbox-item',
+        style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
+        zoom: 10,
+        center: [114.1794, 22.2888],
+        maxBounds: bounds,
+      });
+
+      commit('addMap', map)
+      
+      // add mapbox navigation
+      map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+      map.on('load', ()=> {
+       commit('loading', false);
+      });
+    },
+    generateRoute({ commit, state }) {
+      let waypoints = state.waypoints;
+      
+      let path = waypoints.map(waypoint => {
+        let coord = [waypoint.longitude, waypoint.latitude].join(',');
+        return coord;
+      });
+      
+      let url = "https://api.mapbox.com/directions/v5/mapbox/driving/";
+      
+      let mapbox_url = `${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`;
+
+      if (waypoints.length >= 2) {
+        // mapbox
+        fetch(mapbox_url)
+          .then(response => response.json())
+          .then(data => {
+            commit('saveRoute', data.routes[0].geometry);
+          })
+          .catch(err => {
+            console.log('error', err);
+          });
+      }
+    }
+  },
+  mutations: { 
     active (state, id) {
       state.active = id
       return state.active
@@ -98,21 +114,14 @@ export default new Vuex.Store({
       state.message = message
       return state.message
     },
-    // path (state, route) {
-    //   let path = route.path.map(step => {
-    //     return [step[1], step[0]]
-    //   })
-    //   state.path = path
-    //   return state.path
-    // },
     saveRoute (state, route) {
       state.route = route
       return state.route
     },
-    // saveSuggestions (state, suggestions) {
-    //   state.suggestions = suggestions
-    //   return state.suggestions
-    // },
+    addMap (state, map) {
+      state.map = map;
+      return
+    },
     removeWaypoint (state, index) {
       console.log('before', state.waypoints)
       state.waypoints.splice(index, 1)
@@ -126,8 +135,8 @@ export default new Vuex.Store({
       state.token = token
       return state.token
     },
-    updateList (state, value) {
+    updateWaypoints (state, value) {
       return state.waypoints = value;
     }
-  }
+  },  
 })

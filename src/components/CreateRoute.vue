@@ -1,5 +1,5 @@
 <template>
-  <div class="create-route-container">
+  <div class="create-route-container" v-show="!loading">
     <div class="create-route">
       <input-route></input-route>
     </div>
@@ -30,7 +30,13 @@ export default {
         return this.$store.getters.waypoints;
       },
       set(value) {
-        this.$store.commit('updateList', value)
+        this.$store.commit('updateWaypoints', value) // update waypoints
+        this.$store.dispatch('generateRoute') // dispatch rerender of route
+      }
+    },
+    loading: {
+      get() {
+        return this.$store.getters.loading;
       }
     }
   },

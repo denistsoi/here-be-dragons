@@ -5,8 +5,10 @@
 
 <script>
 import mapboxgl from 'mapbox-gl';
+import { mapGetters } from 'vuex';
 import { 
   generateMarkers,
+  generateMarker,
   generatePath,
   handleResponse, 
   handleError,
@@ -21,81 +23,26 @@ export default {
   },
   data() {
     return {
-      map: null,
+      marker: null,
       requesting: false,
-
     }
   },
-  computed: {},
+  computed: {
+    map: {
+      get: function () {
+        return this.$store.state.map;
+      }
+    }
+  },
   mounted() {
     const store = this.$store;
 
-    let bounds = [
-      [113.23507613916462, 21.8603418729641],
-      [115.05259007364214, 22.777303015462593]
-    ];
-    
-    const map = new mapboxgl.Map({
-      container: 'mapbox-item',
-      style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
-      zoom: 10,
-      center: [114.1794, 22.2888],
-      maxBounds: bounds
-    });
-
-    // add mapbox navigation
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // we want to reference this later
-    this.$set(this, 'map', map);
-
     store.commit('loading', true);
-
-    map.on('load', ()=> {
-      store.commit('loading', false);
-    });
-
-    // use watch (but could use computed values)
-    store.watch(state => {
-      return state.waypoints;
-    }, ()=>{
-      // get waypoints from mapbox
-      let waypoints = store.getters.waypoints;
-      
-      let path = waypoints.map(waypoint => {
-        let coord = [waypoint.longitude, waypoint.latitude].join(',');
-        return coord;
-      });
-
-      let url = "https://api.mapbox.com/directions/v5/mapbox/driving/";
-      
-      let mapbox_url = `${url}${path.join(';')}?steps=true&alternatives=true&geometries=geojson&access_token=pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqNWRhNnozZzBoNGQzMm9oZ2sycG5xdmEifQ.rpJNzetOlSaCMaTPIHKXEA`;
-
-      // fix this (too many markers generated)
-      // waypoints.forEach((waypoint, index) => {
-      //   generateMarkers(map, index, waypoint)
-      // })
-
-      console.log(waypoints);
-
-      if (waypoints.length >= 2) {
-        // mapbox
-        fetch(mapbox_url)
-          .then(response => response.json())
-          .then(data => {
-            store.commit('saveRoute', data.routes[0].geometry);
-          })
-          .catch(err => {
-            console.log('error', err);
-          });
-      }
-    })
+    store.dispatch('loadMap');
 
     // update route whenever route is set
-    store.watch(state => {
-      return state.route
-    }, () => {
-
+    store.watch(store.getters.route, (route) => {
+      const map = this.map;
       if (!map.getSource('route')) {
         function setTemplate(coordinates) {
           return {
@@ -120,14 +67,14 @@ export default {
           }
         }
         
-        let path = setTemplate(store.getters.route);
+        let path = setTemplate(route);
         return map.addLayer(path)
       }
 
       map.getSource('route').setData({
         type: 'Feature',
         properties: {},
-        geometry: store.getters.route
+        geometry: route
       });
     });
   },

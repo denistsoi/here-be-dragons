@@ -9,13 +9,45 @@ export const StatusCodes = {
   success: 'success'
 }
 
+
 /**
  * generateMarkers
  * @description helper function to generate mapbox markers
  * @param {*} map
  * @param {} waypoint
  */
-export const generateMarkers = (map, index, waypoint) => {
+export const generateMarker = (index, waypoint) => {
+  let location = [waypoint.longitude, waypoint.latitude]
+  let el = document.createElement('div')
+  let height = 20
+  let width = 10
+
+  el.className = 'marker';
+  
+  index != 0 ? 
+    el.innerHTML = `<div class="pin"></div>` :
+    el.innerHTML = `<div class="start pin"><div class="circle"></div></div>`;
+  
+
+  el.style.width = `${width}px`
+  el.style.height = `${height}px`
+  
+  let marker = new Marker(el, { offset:
+    [-width / 2, -height]
+  })
+
+  marker.setLngLat(location);
+  return marker;
+}
+
+
+/**
+ * generateMarkers
+ * @description helper function to generate mapbox markers
+ * @param {*} map
+ * @param {} waypoint
+ */
+export const generateMarkers = (index, waypoint, map) => {
   let location = [waypoint.longitude, waypoint.latitude]
 
   let el = document.createElement('div')
@@ -31,12 +63,12 @@ export const generateMarkers = (map, index, waypoint) => {
 
   el.style.width = `${width}px`
   el.style.height = `${height}px`
-
+  
   new Marker(el, { offset:
     [-width / 2, -height]
   })
-    .setLngLat(location)
-    .addTo(map)
+    // .setLngLat(location)
+    // .addTo(map);
 }
 
 /**

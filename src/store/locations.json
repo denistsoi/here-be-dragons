@@ -1,0 +1,37 @@
+{
+  "hong-kong": {
+    "center": {
+      "lng": 114.215126,
+      "lat": 22.337675
+    },
+    "zoom": 9.5
+  },
+  "taipei": {
+    "center": {
+      "lng": 121.5654,
+      "lat": 25.033
+    },
+    "zoom": 9
+  },
+  "manila": {
+    "center": {
+      "lng": 120.9842,
+      "lat": 14.5995
+    },
+    "zoom": 9
+  },
+  "bangkok": {
+    "center": {
+      "lng": 100.5018,
+      "lat": 13.7563
+    },
+    "zoom": 9
+  },
+  "singapore": {
+    "center": {
+      "lng": 103.8198,
+      "lat": 1.3521
+    },
+    "zoom": 9
+  }
+}

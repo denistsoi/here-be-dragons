@@ -29,7 +29,7 @@ export default {
     getAddressData (addressData, placeResultData) {
       this.address = addressData; 
       this.address.name = placeResultData.formatted_address;
-      this.$store.commit('saveWaypoint', this.address);
+      this.$store.dispatch('saveWaypoint', this.address)
       this.$refs.address.clear();
     },
   }
