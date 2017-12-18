@@ -31,6 +31,7 @@ export default {
       },
       set(value) {
         this.$store.commit('updateWaypoints', value) // update waypoints
+        this.$store.dispatch('rerenderMarkers');
         this.$store.dispatch('generateRoute') // dispatch rerender of route
       }
     },

@@ -42,8 +42,28 @@ export default new Vuex.Store({
   },
   actions: {
     saveWaypoint({ dispatch, commit, state }, waypoint) {
-      commit('saveWaypoint', waypoint)
+      commit('saveWaypoint', waypoint);
+      
+      let index = state.waypoints.length - 1;
+      dispatch('generateMarker', { index, waypoint });
       dispatch('generateRoute')
+    },
+    generateMarker({ commit, state }, { index, waypoint }) {
+      let marker = generateMarker(index, waypoint);
+      commit('addMarker', marker);
+
+      // append marker to map
+      marker.addTo(state.map)
+    },
+    rerenderMarkers({ dispatch, commit, state }) {
+      // removeAllMarkers
+      state.markers.map(marker => marker.remove())
+      state.markers = [];
+      
+      // rerenderMarkers
+      state.waypoints.forEach((waypoint, index) => {
+        dispatch('generateMarker', { index, waypoint })
+      });
     },
     loadMap({ commit }) {
       let bounds = [
@@ -59,6 +79,7 @@ export default new Vuex.Store({
         maxBounds: bounds,
       });
 
+      // add map to store
       commit('addMap', map)
       
       // add mapbox navigation
@@ -120,7 +141,10 @@ export default new Vuex.Store({
     },
     addMap (state, map) {
       state.map = map;
-      return
+      return;
+    },
+    addMarker (state, marker) {
+      state.markers.push(marker);
     },
     removeWaypoint (state, index) {
       console.log('before', state.waypoints)
