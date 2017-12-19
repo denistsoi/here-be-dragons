@@ -1,97 +1,120 @@
-import { Marker } from 'mapbox-gl';
+import { Marker } from 'mapbox-gl'
 
 /**
  * status codes for verifying with api
  */
 export const StatusCodes = {
-  failure : 'failure',
+  failure: 'failure',
   progress: 'in progress',
-  success : 'success'
+  success: 'success'
 }
 
+
 /**
- * generateMarkers 
+ * generateMarkers
  * @description helper function to generate mapbox markers
- * @param {*} map 
- * @param {lat/lng} location 
+ * @param {*} map
+ * @param {} waypoint
  */
-export const generateMarkers = (map, path) => {
+export const generateMarker = (index, waypoint) => {
+  let location = [waypoint.longitude, waypoint.latitude]
+  let el = document.createElement('div')
+  let height = 20
+  let width = 10
+
+  el.className = 'marker';
   
-  // el.style.backgroundImage = require('../assets/marker.svg');
-  for (var i = 0; i < path.length; i++) {
-    let el = document.createElement('div');
-    let height = 40, width = 40;
-    
-    el.className = 'marker';
-    el.style.width = `${width}px`;
-    el.style.height = `${height}px`;
-    
-    if (i == 0) {
-      el.innerText = 'start'
-    } else if (i + 1 == path.length) {
-      el.innerText = 'end'
-    } else {
-      el.innerText = i + 1;
-    }
-    
-    new Marker(el,  {offset: 
-      [-width / 2, -height / 2] 
-    })
-    .setLngLat(path[i])
-    .addTo(map);
+  index != 0 ? 
+    el.innerHTML = `<div class="pin"></div>` :
+    el.innerHTML = `<div class="start pin"><div class="circle"></div></div>`;
   
-};
+
+  el.style.width = `${width}px`
+  el.style.height = `${height}px`
+  
+  let marker = new Marker(el, { offset:
+    [-width / 2, -height]
+  })
+
+  marker.setLngLat(location);
+  return marker;
+}
 
 
+/**
+ * generateMarkers
+ * @description helper function to generate mapbox markers
+ * @param {*} map
+ * @param {} waypoint
+ */
+export const generateMarkers = (index, waypoint, map) => {
+  let location = [waypoint.longitude, waypoint.latitude]
+
+  let el = document.createElement('div')
+  let height = 20
+  let width = 10
+
+  el.className = 'marker';
   
+  index != 0 ? 
+    el.innerHTML = `<div class="pin"></div>` :
+    el.innerHTML = `<div class="start pin"><div class="circle"></div></div>`;
+  
+
+  el.style.width = `${width}px`
+  el.style.height = `${height}px`
+  
+  new Marker(el, { offset:
+    [-width / 2, -height]
+  })
 }
 
 /**
  * generatePath
  * @param {number} i // index of path
- * @param {Mapbox Object} map 
- * @param {lat/lng} path 
+ * @param {Mapbox Object} map
+ * @param {lat/lng} path
  */
 export const generatePath = (i, map, path) => {
   // need to create this as a lib [find lib to generate random gradient from hex]
-  let baseColors = ["#CF653E", "#D47F60", "#DA9A83", "#E0B5A6"];
+  let baseColors = ['#CF653E', '#D47F60', '#DA9A83', '#E0B5A6']
 
   map.addLayer({
-    id: "route-" + i,
-    type: "line",
+    id: 'route-' + i,
+    type: 'line',
     source: {
-      type: "geojson",
+      type: 'geojson',
       data: {
-        type: "Feature",
+        type: 'Feature',
         properties: {},
         geometry: {
-          type: "LineString",
+          type: 'LineString',
           coordinates: [
-            path[i],
-            path[i+1]
+            path[i].latitude,
+            path[i].longitude
           ]
         }
       }
     },
     layout: {
-      "line-join": "round",
-      "line-cap": "round"
+      'line-join': 'round',
+      'line-cap': 'round'
     },
     paint: {
-      "line-color": baseColors[i % 4],
-      "line-width": 4
+      'line-color': baseColors[i % 4],
+      'line-width': 4
     }
-  });
+  })
 }
 
 /**
  * generic response handler
- * @param {*} response 
+ * @param {*} response
  */
 
 export const handleResponse = (response) => {
-  if (response.status == 200) {
-    return response.json();
+  if (response.status === 200) {
+    return response.json()
   } else {
     throw Error(`Fetch Failed: ${response.status}`)
   }
@@ -99,7 +122,7 @@ export const handleResponse = (response) => {
 
 /**
  * generic error handler
- * @param {*} error 
+ * @param {*} error
  */
 export const handleError = (error) => {
   console.log('error', error)

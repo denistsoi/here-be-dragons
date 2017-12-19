@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "build:dev": "webpack -w",
-    "dev": "DEBUG=app nodemon index.js",
+    "dev": "DEBUG=app NODE_ENV=dev nodemon .",
     "e2e": "testcafe chrome test/e2e.js",
     "start": "npm run build && node .",
     "clean": "rimraf dist/ && mkdir dist/",
@@ -32,6 +32,7 @@
   "homepage": "https://github.com/denistsoi/here-be-dragons#readme",
   "devDependencies": {
     "assert": "^1.4.1",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.0",
@@ -44,20 +45,24 @@
     "eslint": "^4.0.0",
     "express": "^4.15.3",
     "html-loader": "^0.4.5",
-    "mapbox-gl": "^0.38.0",
     "mocha": "^3.4.2",
-    "nightmare": "^2.10.0",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "sass-loader": "^6.0.6",
     "serviceworker-webpack-plugin": "^0.2.3",
     "style-loader": "^0.18.2",
-    "vue": "^2.3.4",
+    "vue-google-autocomplete": "^1.0.11",
     "vue-loader": "^13.0.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.4",
-    "vuex": "^2.3.1",
-    "webpack": "^3.0.0",
+    "vuedraggable": "^2.14.1",
+    "webpack": "^3.7.1",
+    "webpack-dev-middleware": "^1.12.0",
     "webpack-visualizer-plugin": "^0.1.11"
+  },
+  "dependencies": {
+    "mapbox-gl": "^0.42.2",
+    "vue": "^2.3.4",
+    "vuex": "^3.0.1"
   }
 }

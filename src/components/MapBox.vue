@@ -1,22 +1,14 @@
 <template>
   <div id="mapbox-item">
-    <div class="create-route">
-      <button 
-              v-bind:class="{ requesting: requesting, disabled: route }"
-              v-bind:disabled="requesting || route"
-              @click="getToken()">
-        <span v-if="!route">{{ !requesting ? 'Request Route' : 'Requesting...' }}</span>
-        <span v-if="route">{{ 'Route Generated' }}</span>
-      </button>
-      <MessageBox :message="message"></MessageBox>
-    </div>
   </div>  
 </template>
 
 <script>
 import mapboxgl from 'mapbox-gl';
+import { mapGetters } from 'vuex';
 import { 
   generateMarkers,
+  generateMarker,
   generatePath,
   handleResponse, 
   handleError,
@@ -31,215 +23,67 @@ export default {
   },
   data() {
     return {
-      map: null,
-      requesting: false
+      marker: null,
+      requesting: false,
     }
   },
   computed: {
-    route() {
-      return this.$store.getters.route;
+    map: {
+      get: function () {
+        return this.$store.state.map;
+      }
     },
-    message() {
-      return this.$store.getters.message;
+    route: {
+      get: function() {
+        return this.$store.state.route;
+      }
     },
-
   },
   mounted() {
     const store = this.$store;
 
-    let bounds = [
-      [113.23507613916462, 21.8603418729641],
-      [115.05259007364214, 22.777303015462593]
-    ];
-    
-    const map = new mapboxgl.Map({
-      container: 'mapbox-item',
-      style: 'https://openmaptiles.github.io/klokantech-basic-gl-style/style-cdn.json',
-      zoom: 10,
-      center: [114.1794, 22.2888],
-      maxBounds: bounds
-    });
-
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // we want to reference this later
-    this.$set(this, 'map', map);
-
     store.commit('loading', true);
+    store.dispatch('loadMap');
 
-    map.on('load', ()=> {
-      store.commit('loading', false);
+    // update route whenever route is set
+    store.watch(store.getters.route, (route) => {
+      const map = this.map;
+
+      if (!map.getSource('route')) {
+        function setTemplate(coordinates) {
+          return {
+            id: 'route',
+            type: 'line',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'Feature',
+                properties: {},
+                geometry: coordinates
+              }
+            },
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': "#CF653E",
+              'line-width': 4
+            }
+          }
+        }
+        
+        let path = setTemplate(route);
+        return map.addLayer(path)
+      }
+
+      map.getSource('route').setData({
+        type: 'Feature',
+        properties: {},
+        geometry: route 
+      });
     });
   },
-  methods: {
-    generateRoute(route) {
-      let vm = this;
-      let store = this.$store;
-      store.commit('saveRoute', route);
-      store.commit('path', route);
-
-      window.map = vm.map;
-      window.store = store;
-      
-      let path = store.getters.path;
-
-      for (var i = 0; i < path.length; i++) {
-        generatePath(i, vm.map, path);
-      }
-
-      generateMarkers(vm.map, path);
-      
-      let bounds = path.reduce(function(bounds, coord) {
-          return bounds.extend(coord);
-      }, new mapboxgl.LngLatBounds(path[0], path[0]));
-      
-      let centerBounds = function(bounds) {
-        let lat = (bounds._ne.lat + bounds._sw.lat) / 2;
-        let lng = (bounds._ne.lng + bounds._sw.lng) / 2;
-
-        return {
-          lat,
-          lng
-        }
-      }
-
-      map.fitBounds(bounds, { 
-        padding: { 
-          top: 100
-        }, 
-      });
-      map.flyTo({
-        center: centerBounds(bounds),
-        zoom: 11,
-        bearing: -22,
-        pitch: 25,
-      })
-
-      vm.$set(this, 'requesting', false);
-    },
-    getRoute(token, attempts) {
-      let vm = this;
-      let store = this.$store;
-      
-      if (!attempts) {
-        attempts = 1;
-      }
-
-      if (!store.getters.route) {
-        vm.$set(this, 'requesting', true);
-
-        fetch(`http://localhost:3001/route/${token}`)
-          .then(response => handleResponse(response))
-          .then(data => {
-            if (data.status == StatusCodes.failure) {
-              // show failure
-              store.commit('message', {
-                error: true,
-                status: data.status,
-                errorMessage: data.error + '... Try again'
-              });
-              vm.$set(this, 'requesting', false);
-            } else if (data.status == StatusCodes.progress) {
-              // show in progress (try again)
-              store.commit('message',  { 
-                status: 'progress', 
-                infoMessage: `Attempt #${attempts}: Server in progress... Retrying... `
-              });
-              
-              setTimeout(()=>{
-                attempts++;
-                vm.getRoute(token, attempts);
-              }, 2000);
-            } else if (data.status == StatusCodes.success) {
-              // show route
-              store.commit('message', { 
-                status: data.status, 
-                successMessage: 'Successfully retrieved route.' 
-              });
-              vm.generateRoute(data);
-            }
-          })
-          .catch(error => {
-            store.commit('message', { 
-              error: true,
-              errorMessage: `Attempt #${attempts}: Request at generating route failed. Retrying... `
-            })
-            
-            if (attempts < 5) {
-              attempts++;
-              setTimeout(() => {
-                vm.getRoute(token, attempts) 
-              }, 2000);
-            } else {
-              // show error after all failed retries
-              store.commit('message', { 
-                error: true, 
-                errorMessage: 'Server has an error, please contact help@lalamove.com.' 
-              });
-              vm.$set(this, 'requesting', false);
-            }
-            handleError(error)
-          });
-      }
-      
-    },
-    getToken(attempts) {
-      let vm = this;
-      let store = this.$store;
-
-      if (!attempts) {
-        attempts = 1;
-      } 
-      
-      let token = store.getters.token;
-      if (token) {
-        return vm.getRoute(token);
-      }
-      
-      vm.$set(this, 'requesting', true);
-
-      // TODO: suggestion
-      // push to array to handle multiple routes
-      fetch('http://localhost:3001/route', {
-        method: 'post'
-      })
-        .then(response => handleResponse(response))
-        .then(data => {          
-          store.commit('token', data.token);
-          
-          store.commit('message', { 
-            success: 'token', 
-            successMessage: 'Successfully retrieved token, requesting route...'
-          })
-          
-          setTimeout(() => {
-            vm.getRoute(data.token) 
-          }, 2000);
-        })
-        .catch(error => {
-
-          store.commit('message', { 
-            error: true,
-            errorMessage: `Attempt #${attempts}: Request at access token failed. Retrying... `
-          })
-          handleError(error);
-          
-          if (attempts < 5) {
-            setTimeout(() => {
-              attempts++;
-              vm.getToken(attempts) 
-            }, 2000);
-          } else {
-            // show error after all failed retries
-            store.commit('message', {
-              error: true,
-              errorMessage: 'Server has an error, please contact help@lalamove.com'
-            });
-            vm.$set(this, 'requesting', false);
-          }
-        });
-    }
-  }
 }
 </script>
 
@@ -254,35 +98,45 @@ export default {
   width: 100%;
 }
 
-.marker {
-  background: white;
-  border: 1px solid;
-  color: $button-color;
-  text-align: center;
-  border-radius: 50%;
-  line-height: 40px;
-}
-.create-route {
-  text-align: center;
-  background: transparent;
+
+.pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: $highlight-color;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  padding-top: $header-height; 
-  // padding: 8px 0;
-  button {
-    @include createButton();
-    &.disabled,
-    &.disabled:hover,
-    &.requesting,
-    &.requesting:hover {
-      background-color: $button-color;
-      transition: all .3s ease;
-      color: $button-text-color;
-    }
-    
-  }
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -20px 0 0 -20px;
+  -webkit-animation-name: bounce;
+  -moz-animation-name: bounce;
+  -o-animation-name: bounce;
+  -ms-animation-name: bounce;
+  animation-name: bounce;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
+  -ms-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
+  -ms-animation-duration: 1s;
+  animation-duration: 1s;
+  opacity: .9;
+}
+
+.pin .circle {
+  width: 14px;
+  height: 14px;
+  margin: 8px 0 0 8px;
+  background: #2f2f2f;
+  position: absolute;
+  border-radius: 50%;
 }
 </style>

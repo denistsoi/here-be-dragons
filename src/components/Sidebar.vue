@@ -70,7 +70,7 @@ export default {
 }
 #sidebar {
   width: 10%;
-  border-right: 1px dashed #cf653e;
+  border-right: $dashed-border-style;
   display: flex;
   max-width: 280px;
   flex-direction: column;

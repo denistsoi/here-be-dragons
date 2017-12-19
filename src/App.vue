@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <sidebar></sidebar>
+    <create-route></create-route>
     <content-container></content-container>
   </div>
 </template>
 
 <script>
   import ContentContainer from './container/ContentContainer';
+  import CreateRoute from './components/CreateRoute';
   import Sidebar from './components/Sidebar';
+  
   export default {
     components: {
       ContentContainer,
+      CreateRoute,
       Sidebar,
     },
   }
@@ -19,6 +22,9 @@
 <style lang="scss">
   @import './common-styles/vars';
   
+  html, body {
+    box-sizing: border-box;
+  }
   body {
     margin: 0;
     background-image: linear-gradient(#eee 1px, transparent 1px);
@@ -38,6 +44,11 @@
     margin: 0;
   }
   
+  .pac-container {
+    .pac-item-query, span, p {
+      font-size: 12px;
+    }
+  }
   @import './common-styles/font';
 
 </style>

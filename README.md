@@ -1,27 +1,25 @@
-# lala-map
+# here-be-dragons
 
-A visualisation challenge to interact with lalamove's mockAPI.
+A visualisation challenge.
 
 ### how to use
 
     git clone git@github.com:denistsoi/here-be-dragons.git
     cd here-be-dragons
     npm install
+    npm run build
     npm start
 
-### Peer Dependancies
+### docker usage 
 
-    git clone git@github.com:denistsoi/odyssey.git
-    cd odyssey
-    npm install
-    npm start
+    docker run -p 3000:3000 denistsoi/here-be-dragons
 
 ### project directory
 
     docs/                   // docs to keep track of research/thoughts
     public/
     src/                    // entry file for client side SPA
-    test/               
+    test/
     .dockerignore
     .gitignore
     Dockerfile

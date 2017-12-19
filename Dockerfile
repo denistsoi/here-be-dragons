@@ -1,5 +1,4 @@
-FROM node:6.9.5-alpine
-
+FROM node:9.3.0
 RUN mkdir -p /code
 WORKDIR /code
 ADD . /code

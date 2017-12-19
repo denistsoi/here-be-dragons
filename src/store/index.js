@@ -1,106 +1,36 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+// import helpers
+import actions from './actions';
+import getters from './getters';
+import locations from './locations';
 import navigation from './navigation';
+import mutations from './mutations';
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
-  strict: true,
   state: {
     active: null,
     debug: process.env.DEBUG,
     language: 'english',
     loading: false,
     location: {},
-    locations: {
-      'hong-kong': {
-        center: {
-          lng: 114.21512528562675,
-          lat: 22.33767556806147
-        },
-        zoom: 9.5
-      },
-      'taipei': {
-        // 25.0330° N, 121.5654° E
-        center: {
-          lng: 121.5654,
-          lat: 25.0330
-        },
-        zoom: 9
-      },
-      'manila': {
-        // 14.5995° N, 120.9842° E
-        center: {
-          lng: 120.9842,
-          lat: 14.5995
-        },
-        zoom: 9
-      },
-      'bangkok': {
-        // 13.7563° N, 100.5018° E
-        center: {
-          lng: 100.5018,
-          lat: 13.7563
-        },
-        zoom: 9
-      },
-      'singapore': {
-        // 1.3521° N, 103.8198° E
-        center: {
-          lng: 103.8198,
-          lat: 1.3521
-        },
-        zoom: 9        
-      }
-    },
-    map: null,
+    locations: locations,
+    map: {},
+    markers: [],
     message: null,
     navigation: navigation,
     path: null,
     route: null,
-    token: null
+    routeDetails: null,
+    routes: [],
+    suggestions: null,
+    token: null,
+    waypoints: []
   },
-  getters: {
-    active: state => { return state.active },
-    language: state => { return state.language },
-    loading: state => { return state.loading },
-    location: state => { return state.location },
-    map: state => { return state.map },
-    message: state => { return state.message },
-    navigation: state => { return state.navigation },
-    path: state => { return state.path },
-    route: state => { return state.route },
-    token: state => { return state.token }
-  },
-  mutations: {
-    active (state, id) {
-      return state.active = id;
-    },
-    loading (state, val) {
-      return state.loading = val;
-    },
-    location (state, location) {
-      let coord = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      };
-      return state.location = coord;
-    },
-    message (state, message) {
-      return state.message = message;
-    },
-    path (state, route) {
-      let path = route.path.map(step => {
-        return [step[1], step[0]];
-      });
-      return state.path = path;
-    },
-    saveRoute (state, route) {
-      return state.route = route;
-    },
-    token (state, token) {
-      return state.token = token;
-    },
-  }
-});
+  getters: getters,
+  actions: actions,
+  mutations: mutations,  
+})

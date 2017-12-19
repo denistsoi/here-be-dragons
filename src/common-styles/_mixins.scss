@@ -56,3 +56,28 @@
     transition: all .3s ease;
   }
 }
+
+@mixin pointer() {
+  cursor: pointer;
+}
+
+@mixin placeholder($color: white) {
+  *::-webkit-input-placeholder {
+    color: $color;
+  }
+  *:-moz-placeholder {
+    color: $color;
+  }
+  *::-moz-placeholder {
+    color: $color;
+  }
+  *:-ms-input-placeholder {
+    color: $color;
+  }  
+}
+
+@mixin ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
