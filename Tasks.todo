@@ -11,7 +11,35 @@
 ✔ fix route generation @done (2017-12-18 22:57:29)
 ✔ implement remove marker from map @done (2017-12-18 23:35:51)
 
-☐ remove route if less than two waypoints
-☐ fix route for waypoints (over long distances + avoid max cap)
-☐ add distance and route time for journey
+✔ remove route if less than two waypoints @done (2017-12-19 11:25:14)
+
+# (compare driving/traffic api)
+✔ add distance and route time for journey @done (2017-12-19 14:47:40)
+✔ fix sidebar sizing for input/route and details @done (2017-12-19 17:17:26)
+
+# waypoint/marker enhancements
 ☐ show position of marker on map (i.e. highlight/go to)
+☐ edit waypoint by keyboard/type
+
+☐ drag marker to edit route/position
+☐ fix text size/width of sidebar
+
+# improve routing for multiple waypoints
+✔ add traffic duration and compare time differences (busy) @done (2017-12-19 18:19:55)
+✔ use mapbox matrix/optimisation apis -> look at how its implemented @done (2017-12-19 18:19:58)
+
+# migrate api usage to odyssey
+✔ reduce requests to mapbox api @done (2017-12-19 18:20:00)
+
+# given:
+  A -> B -> C -> D -> E.
+  the following requests could be made
+  
+  - request(A,B)
+  - request(B,C)
+  - request(C,D)
+  - request(D,E)
+  
+  1. separate requests and join geometry for map;
+  2. use OSRM backend (docker/docker-compose) instead?
+  ✔ by-pass mapbox with osrm @done (2017-12-19 17:41:43)

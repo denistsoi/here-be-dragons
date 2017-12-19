@@ -1,19 +1,13 @@
 # here-be-dragons
 
-A visualisation challenge to interact with [odyssey](https://github.com/denistsoi/odyssey) mockAPI.
+A visualisation challenge.
 
 ### how to use
 
     git clone git@github.com:denistsoi/here-be-dragons.git
     cd here-be-dragons
     npm install
-    npm run dev
-
-### Peer Dependancies
-
-    git clone git@github.com:denistsoi/odyssey.git
-    cd odyssey
-    npm install
+    npm run build
     npm start
 
 ### project directory
