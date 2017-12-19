@@ -32,7 +32,12 @@ export default {
       get: function () {
         return this.$store.state.map;
       }
-    }
+    },
+    route: {
+      get: function() {
+        return this.$store.state.route;
+      }
+    },
   },
   mounted() {
     const store = this.$store;
@@ -44,7 +49,6 @@ export default {
     store.watch(store.getters.route, (route) => {
       const map = this.map;
 
-      // fix this part (for less than two waypoints)
       if (!map.getSource('route')) {
         function setTemplate(coordinates) {
           return {
@@ -76,7 +80,7 @@ export default {
       map.getSource('route').setData({
         type: 'Feature',
         properties: {},
-        geometry: route
+        geometry: route 
       });
     });
   },
@@ -123,18 +127,13 @@ export default {
   -o-animation-duration: 1s;
   -ms-animation-duration: 1s;
   animation-duration: 1s;
-  opacity: 0.5;
+  opacity: .9;
 }
 
-.start.pin {
-  opacity: .75;
-}
 .pin .circle {
-  // content: '';
   width: 14px;
   height: 14px;
   margin: 8px 0 0 8px;
-  // border: #2f2f2f;
   background: #2f2f2f;
   position: absolute;
   border-radius: 50%;

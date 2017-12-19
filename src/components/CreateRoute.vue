@@ -4,14 +4,21 @@
       <input-route></input-route>
     </div>
 
-    <draggable v-model="waypoints" class="waypoints">
+    <draggable v-model="waypoints" class="waypoints" v-if="waypoints">
       <transition-group name="waypoint">
         <div v-for="(waypoint, index) in waypoints" class="waypoint-item" v-bind:key="waypoint">
-          <span class="index">{{ index + 1 }}</span><span class="address">{{ waypoint.name }}</span><span class="dismiss" v-if="waypoint" @click="removeWaypoint(index)">X</span>
+          <span class="index">{{ index + 1 }}</span>
+          <span class="address">{{ waypoint.name }}</span>
+          <span class="dismiss" v-if="waypoint" @click="removeWaypoint(index)">X</span>
         </div>
       </transition-group>
     </draggable>
     
+    <div class="route-details" v-if="details">
+      <p>Route Details</p>
+      <p>Distance {{ distance | toKM }}</p> 
+      <p>Approx. {{ duration | toHumanTime }}</p>
+    </div>
   </div>
 </template>
 
@@ -24,6 +31,18 @@ export default {
     draggable,
     InputRoute
   },
+  filters: {
+    toHumanTime: function(val) {
+      if (val) {
+        return `${Math.floor(val/60)} mins`;
+      }
+    },
+    toKM: function(val) {
+      if (val) {
+        return Math.ceil(parseInt(val/1000)).toString() + "KM";
+      }
+    }
+  },  
   computed: {
     waypoints: {
       get() {
@@ -31,10 +50,31 @@ export default {
       },
       set(value) {
         this.$store.commit('updateWaypoints', value) // update waypoints
-        this.$store.dispatch('rerenderMarkers');
+        this.$store.dispatch('rerenderMarkers')
         this.$store.dispatch('generateRoute') // dispatch rerender of route
       }
     },
+    details: {
+      get: function() {
+        return this.$store.state.routeDetails;
+      }
+    },
+    distance: {
+      get: function() {
+        let details = this.$store.state.routeDetails;
+        if (details) {
+          return details.distance;
+        }
+      }
+    },
+    duration: {
+      get: function() {
+        let details = this.$store.state.routeDetails;
+        if (details) {
+          return details.duration;
+        }
+      }
+    },    
     loading: {
       get() {
         return this.$store.getters.loading;
@@ -59,11 +99,17 @@ export default {
   position: relative;
   width: 20%;
   min-width: 250px;
-  height: 100%;
-  padding-top: $header-height; 
+
+  display: grid;
+  grid-template-rows: 80px 240px;
+  grid-template-columns: 250px;
+
+  & > div {
+    padding-top: 16px;
+  }
 
   .create-route {
-    padding: 0 8px;
+    padding: 32px 8px 0;
     text-align: left;
 
     @include placeholder(#444);
