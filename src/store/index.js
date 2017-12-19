@@ -89,6 +89,11 @@ export default new Vuex.Store({
        commit('loading', false);
       });
     },
+    removeWaypoint({ dispatch, commit, state }, index) {
+      commit('removeWaypoint', index);
+      dispatch('rerenderMarkers');
+      dispatch('generateRoute');
+    },
     generateRoute({ commit, state }) {
       let waypoints = state.waypoints;
       
@@ -111,6 +116,8 @@ export default new Vuex.Store({
           .catch(err => {
             console.log('error', err);
           });
+      } else {
+        commit('saveRoute', null)
       }
     }
   },
@@ -147,9 +154,7 @@ export default new Vuex.Store({
       state.markers.push(marker);
     },
     removeWaypoint (state, index) {
-      console.log('before', state.waypoints)
       state.waypoints.splice(index, 1)
-      console.log('after', state.waypoints)
       return state.waypoints
     },
     saveWaypoint (state, waypoint) {

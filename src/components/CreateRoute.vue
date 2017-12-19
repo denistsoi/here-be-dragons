@@ -7,7 +7,7 @@
     <draggable v-model="waypoints" class="waypoints">
       <transition-group name="waypoint">
         <div v-for="(waypoint, index) in waypoints" class="waypoint-item" v-bind:key="waypoint">
-          <span class="index">{{ index + 1 }}</span><span class="address">{{ waypoint.name }}</span><span class="dismiss" v-if="waypoint" @click="removeWaypoint">X</span>
+          <span class="index">{{ index + 1 }}</span><span class="address">{{ waypoint.name }}</span><span class="dismiss" v-if="waypoint" @click="removeWaypoint(index)">X</span>
         </div>
       </transition-group>
     </draggable>
@@ -42,8 +42,8 @@ export default {
     }
   },
   methods: {
-    removeWaypoint() {
-      console.log(this);
+    removeWaypoint(index) {
+      this.$store.dispatch('removeWaypoint', index)
     }
   }
 }

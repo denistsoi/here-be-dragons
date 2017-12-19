@@ -43,6 +43,8 @@ export default {
     // update route whenever route is set
     store.watch(store.getters.route, (route) => {
       const map = this.map;
+
+      // fix this part (for less than two waypoints)
       if (!map.getSource('route')) {
         function setTemplate(coordinates) {
           return {

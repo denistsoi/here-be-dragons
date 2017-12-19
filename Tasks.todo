@@ -7,10 +7,11 @@
 ✔ how does this respond on mobile? @done (2017-10-14 12:02:25)
 ✔ what's a good UI for this application? - look at dribbble for inspiration @done (2017-10-14 12:02:35)
 
-☐ fix generate marker
-☐ fix route generation
-☐ fix route for waypoints (over long distances)
-☐ add distance and route time for route
+✔ fix generate marker @done (2017-12-18 22:57:28)
+✔ fix route generation @done (2017-12-18 22:57:29)
+✔ implement remove marker from map @done (2017-12-18 23:35:51)
 
+☐ remove route if less than two waypoints
+☐ fix route for waypoints (over long distances + avoid max cap)
+☐ add distance and route time for journey
 ☐ show position of marker on map (i.e. highlight/go to)
-☐ implement remove marker from map
