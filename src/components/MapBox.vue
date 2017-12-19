@@ -98,7 +98,9 @@ export default {
   width: 100%;
 }
 
-
+.mapboxgl-missing-css {
+  display: none;
+}
 .pin {
   width: 30px;
   height: 30px;

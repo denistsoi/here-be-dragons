@@ -10,9 +10,9 @@ A visualisation challenge.
     npm run build
     npm start
 
-### docker usage 
+<!-- ### docker usage 
 
-    docker run -p 3000:3000 denistsoi/here-be-dragons
+    docker run -p 3000:3000 denistsoi/here-be-dragons -->
 
 ### project directory
 

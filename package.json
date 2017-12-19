@@ -1,6 +1,6 @@
 {
   "name": "here-be-dragons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a mapping experiment",
   "main": "index.js",
   "scripts": {
